@@ -1,0 +1,30 @@
+Scope Development yang Sudah Clear:
+Core Development:
+
+NAVI Blockchain mainnet (13 validator nodes)
+Smart contracts (fundraising, STO, Navicoin)
+API Integration (NAVI Points exchange, AI integration)
+Investor Web Platform (Web3 wallet connection)
+STO Marketplace (trading platform)
+Admin Interface Lending (campaign management)
+
+Integration Points:
+
+NAVI Doc → API → NAVI Blockchain
+Points database → Blockchain (configurable rate)
+AI detection → Fundraising campaigns
+Investor Web3 wallets → Platform
+
+Sekarang saya akan merevisi proposal dengan:
+
+Fokus scope yang tepat (hilangkan bengkel interface, admin blockchain)
+Timeline 40-45 hari kerja (8-9 minggu)
+Detail API untuk points exchange yang configurable
+Web3 investor onboarding flow
+Integrasi yang lebih spesifik dengan NAVI Doc existing
+
+Apakah saya langsung revisi proposal sekarang, atau ada aspek lain yang perlu kita diskusikan terlebih dahulu? Misalnya:
+
+Budget adjustment sesuai scope yang lebih focused?
+Technical stack preferences?
+Priority features untuk MVP vs advanced features?
