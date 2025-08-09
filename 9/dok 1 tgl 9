@@ -1,0 +1,184 @@
+# NAVI Project Summary - Technical Documentation
+
+## Project Overview
+
+NAVI adalah platform blockchain terintegrasi yang memfasilitasi pembiayaan perbaikan kapal melalui sistem investasi dengan dukungan tokenisasi (STO). Platform ini menghubungkan pemilik kapal, investor, dan bengkel galangan untuk menciptakan ekosistem pembiayaan maritim yang transparan dan efisien.
+
+## Core Components
+
+### 1. NAVI Blockchain Infrastructure
+- **Blockchain Mainnet** dengan konsensus DPOS (Delegated Proof of Stake)
+- **Explorer** berbasis web untuk monitoring transaksi dan smart contract
+- **Multi-chain Bridge** untuk interoperabilitas dengan jaringan lain
+- **Web3 Wallet** dengan dukungan multi-chain
+- **Native Token (Navicoin)** sebagai utility token
+
+### 2. Funding Platform
+- **Campaign Management System** untuk proyek pembiayaan kapal
+- **STO Token Issuance** sebagai bukti kepemilikan investasi
+- **STO Marketplace** untuk perdagangan token sekunder
+- **Smart Contract** untuk automasi pembayaran cicilan
+- **NFT Documentation** untuk laporan perbaikan kapal
+
+### 3. External Integration
+- **Navidoc Integration** (client's AI system) untuk deteksi kerusakan dan rekomendasi
+- **ICO Website** untuk token sale dan informasi proyek
+- **Multi-currency Support** (USDT, USDC, SGD stablecoin)
+
+## System Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              NAVI ECOSYSTEM                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────┐    ┌──────────────┐    ┌─────────────┐    ┌─────────────┐ │
+│  │   NAVIDOC   │    │   PEMILIK    │    │   BENGKEL   │    │  INVESTOR   │ │
+│  │ (Client AI) │    │    KAPAL     │    │  GALANGAN   │    │             │ │
+│  └──────┬──────┘    └──────┬───────┘    └──────┬──────┘    └──────┬──────┘ │
+│         │                  │                   │                  │        │
+│         │ Damage Detection │ Funding Request   │ Work Progress    │ Investment │
+│         │ & Recommendation │                   │ Reports          │        │
+│         │                  │                   │                  │        │
+│  ┌──────▼──────────────────▼───────────────────▼──────────────────▼──────┐ │
+│  │                    NAVI BLOCKCHAIN PLATFORM                           │ │
+│  │                                                                        │ │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐  │ │
+│  │  │ Campaign    │  │ STO Token    │  │ Smart       │  │ Payment     │  │ │
+│  │  │ Management  │  │ Issuance     │  │ Contracts   │  │ Processing  │  │ │
+│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘  │ │
+│  │                                                                        │ │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐  │ │
+│  │  │ STO         │  │ NFT          │  │ Bridge      │  │ Explorer    │  │ │
+│  │  │ Marketplace │  │ Minting      │  │ System      │  │ & Wallet    │  │ │
+│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘  │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
+│                                                                             │
+│  ┌─────────────────────────────────────────────────────────────────────────┐ │
+│  │                        BLOCKCHAIN INFRASTRUCTURE                        │ │
+│  │                                                                         │ │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐   │ │
+│  │  │ DPOS        │  │ Validator    │  │ EVM/Solana  │  │ Native      │   │ │
+│  │  │ Consensus   │  │ Network      │  │ Support     │  │ Navicoin    │   │ │
+│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘   │ │
+│  └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Platform Workflow
+
+### 1. Funding Request Process
+1. **Navidoc** mendeteksi kerusakan kapal dan memberikan rekomendasi
+2. **Pemilik kapal** menyetujui pengajuan funding melalui platform
+3. **NAVI Blockchain** membuat campaign funding dengan detail:
+   - Data kapal dan estimasi biaya
+   - Bengkel yang direkomendasikan
+   - Syarat cicilan dan bunga
+4. **Register fee** dibayar dalam Navicoin
+5. Campaign dipublikasikan untuk investor
+
+### 2. Investment Process
+1. **Investor** melihat daftar campaign yang tersedia
+2. Melakukan investasi menggunakan stablecoin atau native coin
+3. **STO Token** diterbitkan sesuai proporsi investasi
+4. Token dapat:
+   - Disimpan untuk mendapat return cicilan
+   - Diperjualbelikan di STO Marketplace
+
+### 3. Fund Disbursement
+1. Setelah target funding tercapai, **NAVI Blockchain** notifikasi ke Navidoc
+2. **Navidoc** memberikan instruksi pencairan ke bengkel
+3. **Bengkel** menerima dana dalam stablecoin
+4. Perbaikan dilakukan sesuai spesifikasi
+
+### 4. Work Completion & Documentation
+1. **Bengkel** menyelesaikan perbaikan
+2. Menerbitkan laporan digital perbaikan
+3. **NFT (ERC-721)** di-mint sebagai dokumentasi permanen
+4. **Pemilik kapal** mulai pembayaran cicilan
+
+### 5. Return Distribution
+1. **Pemilik kapal** membayar cicilan berkala
+2. **Investor** melakukan klaim melalui platform
+3. Sistem verifikasi kepemilikan STO Token
+4. Pembayaran didistribusi pro-rata berdasarkan kepemilikan token
+
+## Feature Specifications
+
+### For Investors
+- **Project Discovery**: Akses daftar campaign funding yang telah diverifikasi
+- **Multi-currency Investment**: Support USDT, USDC, SGD stablecoin, dan native coin
+- **STO Token Management**: Otomatis receive token setelah investasi
+- **Portfolio Monitoring**: Real-time tracking progress proyek dan fund utilization
+- **Secondary Trading**: Jual-beli STO token di marketplace
+- **Return Claims**: Automated distribution berdasarkan kepemilikan token
+- **Tier System**: Kuota investasi berdasarkan Navicoin holdings
+
+### For Ship Owners (Borrowers)
+- **Digital Loan Application**: Submit funding request terintegrasi dengan Navidoc
+- **Fund Monitoring**: Dashboard untuk tracking dana dan progress perbaikan
+- **Repair Tracking**: Real-time monitoring pekerjaan bengkel
+- **Payment Management**: Scheduled repayment melalui smart contract
+- **Documentation Access**: View NFT repair reports
+
+### For Shipyards
+- **Project Approval**: Review dan approve loan applications
+- **Fund Tracking**: Monitor funding progress dan milestone
+- **Disbursement Requests**: Request fund release berdasarkan work progress
+- **Work Documentation**: Submit progress reports dan final documentation
+- **NFT Issuance**: Generate permanent work certificates
+
+### Blockchain Infrastructure Features
+- **Explorer**: Web-based blockchain explorer dengan dark/light mode
+- **Smart Contract Verification**: Contract verification dan details
+- **Validator Network**: DPOS consensus dengan customizable validators
+- **Cross-chain Bridge**: Transfer aset antar blockchain networks
+- **Web3 Wallet**: Multi-chain support dengan transaction tracking
+- **Custom Token Support**: Add dan manage various tokens
+
+### Navicoin Utilities
+- **Register Fee**: Payment untuk platform registration
+- **Admin Fee**: Deducted dari funding sebelum disbursement
+- **Investor Tiers**: Investment limits berdasarkan token holdings
+- **Boosted Returns**: Higher returns untuk Navicoin holders/stakers
+
+### Security & Compliance
+- **Smart Contract Automation**: Transparent fund management
+- **KYC Integration**: User verification system
+- **Multi-signature Security**: Enhanced transaction security
+- **Audit Trail**: Comprehensive transaction logging
+- **NFT Documentation**: Immutable work completion records
+
+## Technical Stack
+- **Blockchain**: DPOS consensus, EVM/Solana compatible
+- **Smart Contracts**: Solidity/Rust implementation
+- **Storage**: IPFS for NFT metadata
+- **Bridge**: Cross-chain interoperability protocol
+- **Frontend**: Web3-enabled responsive interface
+- **Integration**: API connectivity dengan Navidoc system
+
+## Project Timeline
+- **Total Duration**: 50 working days (2 months @ 25 working days/month)
+- **Month 1 (Day 1-25)**: Blockchain infrastructure development
+  - Blockchain Mainnet dengan DPOS consensus
+  - Explorer dan Wallet integration
+  - Bridge system dan Smart Contract core
+- **Month 2 (Day 26-50)**: Platform development & integration
+  - Funding platform dan STO system
+  - Marketplace dan NFT implementation
+  - Navidoc integration dan testing
+- **Maintenance**: 3 months post-launch support
+
+## Investment & Payment Schedule
+- **Total Investment**: IDR 600,000,000
+- **Payment Structure**: 5-stage milestone and time-based payments
+  1. **Down Payment**: IDR 100,000,000 (upon contract signing)
+  2. **1st Milestone**: IDR 100,000,000 (1 month after project start - Day 25)
+  3. **2nd Milestone**: IDR 200,000,000 (upon Phase 1 completion - blockchain infrastructure ready)
+  4. **3rd Milestone**: IDR 100,000,000 (upon project completion - all systems live)
+  5. **Final Payment**: IDR 100,000,000 (1 month after go-live - maintenance period)
+- **Revenue Streams**: Register fees, admin fees, transaction fees, premium features
+
+---
+
+*This technical summary provides the foundation for detailed system design and implementation planning.*
