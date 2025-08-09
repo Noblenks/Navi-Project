@@ -142,13 +142,91 @@ Catatan: Interface bengkel tidak dikembangkan dalam proyek ini
 - **NFT System**: Implementasi ERC-721 untuk dokumentasi
 - **Bridge Services**: Transfer aset antar jaringan blockchain
 
-### 5.3 Integrasi Eksternal
+### 5.3 Kebutuhan Teknis & Dependencies
+
+#### 5.3.1 Spesifikasi Hardware
+**Server Requirements (Production)**:
+- **Application Server**: 32 GB RAM, 8 CPU cores, 500 GB SSD
+- **Blockchain Node**: 64 GB RAM, 16 CPU cores, 2 TB NVMe SSD
+- **Database Server**: 32 GB RAM, 8 CPU cores, 1 TB SSD + 2 TB backup storage
+- **Load Balancer**: 16 GB RAM, 4 CPU cores, 100 GB SSD
+- **Network**: Minimum 1 Gbps dedicated bandwidth per server
+
+**Development Environment**:
+- **Development Server**: 16 GB RAM, 4 CPU cores, 250 GB SSD
+- **Testing Server**: 16 GB RAM, 4 CPU cores, 250 GB SSD
+- **CI/CD Server**: 8 GB RAM, 4 CPU cores, 200 GB SSD
+
+#### 5.3.2 Infrastruktur Cloud & Hosting
+- **Cloud Provider**: AWS, Google Cloud, atau Azure dengan region Asia Pacific
+- **CDN Services**: CloudFlare atau AWS CloudFront untuk asset delivery
+- **DNS Management**: Layanan DNS dengan geographic routing capability
+- **SSL Certificates**: Wildcard SSL untuk semua subdomain
+- **Backup Storage**: Automated backup dengan retention 30 hari
+
+#### 5.3.3 Database Requirements
+- **Primary Database**: PostgreSQL 14+ dengan replication setup
+- **Cache Layer**: Redis Cluster untuk session management
+- **Blockchain Data**: Dedicated storage untuk blockchain state
+- **Analytics Database**: Separate instance untuk reporting dan analytics
+- **Backup Strategy**: Real-time replication + daily snapshots
+
+#### 5.3.4 Third-Party Services Dependencies
+- **Email Services**: SendGrid atau AWS SES untuk notifikasi
+- **SMS Gateway**: Twilio untuk verifikasi OTP
+- **File Storage**: AWS S3 atau equivalent untuk dokumen upload
+- **Monitoring Tools**: DataDog atau New Relic untuk system monitoring
+- **Security Services**: Web Application Firewall (WAF)
+
+#### 5.3.5 API & Integration Dependencies
+- **Blockchain RPC**: Ethereum dan Solana node access
+- **Price Feed Oracle**: Chainlink atau equivalent untuk currency rates
+- **KYC Service**: Jumio atau Onfido untuk identity verification
+- **Payment Gateway**: Integration dengan exchange untuk fiat on-ramp
+- **Navidoc API**: Authenticated connection untuk points exchange
+
+#### 5.3.6 Development Tools & Framework
+- **Backend Framework**: Node.js dengan Express atau Python Django
+- **Frontend Framework**: React.js atau Vue.js untuk web interface
+- **Mobile Framework**: React Native atau Flutter (jika diperlukan)
+- **Blockchain Development**: Truffle, Hardhat, atau Foundry
+- **Version Control**: Git dengan GitLab atau GitHub Enterprise
+
+#### 5.3.7 Security & Compliance Tools
+- **Wallet Security**: Hardware Security Module (HSM) untuk key management
+- **Code Analysis**: SonarQube untuk static code analysis
+- **Vulnerability Scanning**: OWASP ZAP atau Nessus
+- **Penetration Testing**: Quarterly security assessment
+- **Compliance Monitoring**: Automated compliance checking tools
+
+#### 5.3.8 Network & Connectivity
+- **Internet Connection**: Redundant ISP dengan minimum 99.9% uptime SLA
+- **VPN Setup**: Site-to-site VPN untuk secure communication
+- **Firewall Configuration**: Multi-layer firewall dengan intrusion detection
+- **API Rate Limiting**: Distributed rate limiting untuk public APIs
+- **DDoS Protection**: Layer 7 DDoS mitigation service
+
+#### 5.3.9 Monitoring & Alerting
+- **System Monitoring**: CPU, memory, disk, network monitoring
+- **Application Performance**: Response time dan error rate tracking
+- **Blockchain Monitoring**: Node sync status dan transaction monitoring  
+- **Log Management**: Centralized logging dengan ELK Stack
+- **Alert System**: 24/7 alerting untuk critical issues
+
+#### 5.3.10 Backup & Disaster Recovery
+- **Data Backup**: Automated daily backup dengan off-site storage
+- **System Backup**: Complete system image backup weekly
+- **Recovery Testing**: Monthly disaster recovery testing
+- **RTO/RPO Requirements**: Recovery Time Objective 4 jam, Recovery Point Objective 1 jam
+- **Failover Strategy**: Hot standby untuk critical components
+
+### 5.4 Integrasi Eksternal
 - **Navidoc Point System**: Database poin di sistem klien
 - **Point Exchange API**: Konversi rate yang dapat dikonfigurasi (1:1 atau 1000:1)
 - **Multi-currency Support**: USDT, USDC, SGD stablecoin
 - **Wallet Integration**: Konektivitas Web3
 
-### 5.4 Utilitas Navicoin
+### 5.5 Utilitas Navicoin
 - **Register Fee**: Pembayaran untuk registrasi platform
 - **Transaction Fee Discount**: Potongan fee ketika menggunakan Navicoin
 - **Point Exchange**: Konversi dari Navi Points dengan rate yang dapat dikonfigurasi
