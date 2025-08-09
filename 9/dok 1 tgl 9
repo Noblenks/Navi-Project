@@ -1,4 +1,10 @@
-# NAVI Project Summary - Technical Documentation
+### Admin Lending Interface
+- **Campaign Management**: Create, edit, dan monitor lending campaigns
+- **Investor Dashboard**: Comprehensive view untuk investor management
+- **Fund Allocation**: Monitor dan manage fund distribution
+- **STO Token Oversight**: Track token issuance dan trading activity
+- **Analytics & Reporting**: Detailed platform performance metrics
+- **User Management**: Investor onboarding dan verification# NAVI Project Summary - Technical Documentation
 
 ## Project Overview
 
@@ -21,7 +27,9 @@ NAVI adalah platform blockchain terintegrasi yang memfasilitasi pembiayaan perba
 - **NFT Documentation** untuk laporan perbaikan kapal
 
 ### 3. External Integration
-- **Navidoc Integration** (client's AI system) untuk deteksi kerusakan dan rekomendasi
+- **Navidoc Integration** (client's system under development) untuk deteksi kerusakan dan rekomendasi
+- **Navidoc Point System** dengan wallet integration di sisi client
+- **Point Exchange API** untuk konversi Navi Point ke Navicoin (rate configurable: 1:1 atau 1000:1)
 - **ICO Website** untuk token sale dan informasi proyek
 - **Multi-currency Support** (USDT, USDC, SGD stablecoin)
 
@@ -32,27 +40,35 @@ NAVI adalah platform blockchain terintegrasi yang memfasilitasi pembiayaan perba
 │                              NAVI ECOSYSTEM                                 │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  ┌─────────────┐    ┌──────────────┐    ┌─────────────┐    ┌─────────────┐ │
-│  │   NAVIDOC   │    │   PEMILIK    │    │   BENGKEL   │    │  INVESTOR   │ │
-│  │ (Client AI) │    │    KAPAL     │    │  GALANGAN   │    │             │ │
-│  └──────┬──────┘    └──────┬───────┘    └──────┬──────┘    └──────┬──────┘ │
-│         │                  │                   │                  │        │
-│         │ Damage Detection │ Funding Request   │ Work Progress    │ Investment │
-│         │ & Recommendation │                   │ Reports          │        │
-│         │                  │                   │                  │        │
-│  ┌──────▼──────────────────▼───────────────────▼──────────────────▼──────┐ │
-│  │                    NAVI BLOCKCHAIN PLATFORM                           │ │
-│  │                                                                        │ │
-│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐  │ │
-│  │  │ Campaign    │  │ STO Token    │  │ Smart       │  │ Payment     │  │ │
-│  │  │ Management  │  │ Issuance     │  │ Contracts   │  │ Processing  │  │ │
-│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘  │ │
-│  │                                                                        │ │
-│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐  │ │
-│  │  │ STO         │  │ NFT          │  │ Bridge      │  │ Explorer    │  │ │
-│  │  │ Marketplace │  │ Minting      │  │ System      │  │ & Wallet    │  │ │
-│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘  │ │
-│  └────────────────────────────────────────────────────────────────────────┘ │
+│  ┌─────────────┐    ┌──────────────┐                     ┌─────────────┐    │
+│  │   NAVIDOC   │    │   PEMILIK    │                     │  INVESTOR   │    │
+│  │ (In Progress)│    │    KAPAL     │                     │             │    │
+│  │ +Navi Points│    │              │                     │             │    │
+│  │ +Wallet     │    │              │                     │             │    │
+│  └──────┬──────┘    └──────┬───────┘                     └──────┬──────┘    │
+│         │                  │                                    │           │
+│         │ Points Exchange  │ Funding Request                    │ Investment│
+│         │ API (1:1/1000:1) │                                    │           │
+│         │                  │                                    │           │
+│  ┌──────▼──────────────────▼────────────────────────────────────▼──────┐    │
+│  │                    NAVI BLOCKCHAIN PLATFORM                          │    │
+│  │                                                                       │    │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐ │    │
+│  │  │ Campaign    │  │ STO Token    │  │ Smart       │  │ Point       │ │    │
+│  │  │ Management  │  │ Issuance     │  │ Contracts   │  │ Exchange    │ │    │
+│  │  │             │  │              │  │             │  │ API         │ │    │
+│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘ │    │
+│  │                                                                       │    │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐ │    │
+│  │  │ STO         │  │ NFT          │  │ Bridge      │  │ Explorer    │ │    │
+│  │  │ Marketplace │  │ Minting      │  │ System      │  │ & Wallet    │ │    │
+│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘ │    │
+│  │                                                                       │    │
+│  │  ┌─────────────────────────────────────────────────────────────────┐ │    │
+│  │  │              ADMIN LENDING INTERFACE                            │ │    │
+│  │  │          (Campaign Management & Investor Dashboard)             │ │    │
+│  │  └─────────────────────────────────────────────────────────────────┘ │    │
+│  └───────────────────────────────────────────────────────────────────────┘    │
 │                                                                             │
 │  ┌─────────────────────────────────────────────────────────────────────────┐ │
 │  │                        BLOCKCHAIN INFRASTRUCTURE                        │ │
@@ -63,6 +79,8 @@ NAVI adalah platform blockchain terintegrasi yang memfasilitasi pembiayaan perba
 │  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘   │ │
 │  └─────────────────────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────────────────┘
+
+Note: Bengkel interface tidak dikembangkan dalam project ini
 ```
 
 ## Platform Workflow
@@ -72,13 +90,12 @@ NAVI adalah platform blockchain terintegrasi yang memfasilitasi pembiayaan perba
 2. **Pemilik kapal** menyetujui pengajuan funding melalui platform
 3. **NAVI Blockchain** membuat campaign funding dengan detail:
    - Data kapal dan estimasi biaya
-   - Bengkel yang direkomendasikan
    - Syarat cicilan dan bunga
-4. **Register fee** dibayar dalam Navicoin
-5. Campaign dipublikasikan untuk investor
+4. **Register fee** dibayar dalam Navicoin atau melalui Point Exchange API
+5. Campaign dipublikasikan untuk investor melalui Admin Lending Interface
 
 ### 2. Investment Process
-1. **Investor** melihat daftar campaign yang tersedia
+1. **Investor** melihat daftar campaign melalui Admin Lending Interface
 2. Melakukan investasi menggunakan stablecoin atau native coin
 3. **STO Token** diterbitkan sesuai proporsi investasi
 4. Token dapat:
@@ -86,16 +103,14 @@ NAVI adalah platform blockchain terintegrasi yang memfasilitasi pembiayaan perba
    - Diperjualbelikan di STO Marketplace
 
 ### 3. Fund Disbursement
-1. Setelah target funding tercapai, **NAVI Blockchain** notifikasi ke Navidoc
-2. **Navidoc** memberikan instruksi pencairan ke bengkel
-3. **Bengkel** menerima dana dalam stablecoin
-4. Perbaikan dilakukan sesuai spesifikasi
+1. Setelah target funding tercapai, **NAVI Blockchain** memberikan notifikasi
+2. Dana dicairkan langsung ke pemilik kapal atau pihak yang berwenang
+3. Perbaikan dilakukan sesuai spesifikasi yang disepakati
 
 ### 4. Work Completion & Documentation
-1. **Bengkel** menyelesaikan perbaikan
-2. Menerbitkan laporan digital perbaikan
-3. **NFT (ERC-721)** di-mint sebagai dokumentasi permanen
-4. **Pemilik kapal** mulai pembayaran cicilan
+1. Setelah perbaikan selesai, laporan digital dibuat
+2. **NFT (ERC-721)** di-mint sebagai dokumentasi permanen
+3. **Pemilik kapal** mulai pembayaran cicilan
 
 ### 5. Return Distribution
 1. **Pemilik kapal** membayar cicilan berkala
@@ -117,30 +132,28 @@ NAVI adalah platform blockchain terintegrasi yang memfasilitasi pembiayaan perba
 ### For Ship Owners (Borrowers)
 - **Digital Loan Application**: Submit funding request terintegrasi dengan Navidoc
 - **Fund Monitoring**: Dashboard untuk tracking dana dan progress perbaikan
-- **Repair Tracking**: Real-time monitoring pekerjaan bengkel
 - **Payment Management**: Scheduled repayment melalui smart contract
 - **Documentation Access**: View NFT repair reports
+- **Point Exchange**: Convert Navi Points ke Navicoin melalui API (rate configurable)
 
 ### For Shipyards
-- **Project Approval**: Review dan approve loan applications
-- **Fund Tracking**: Monitor funding progress dan milestone
-- **Disbursement Requests**: Request fund release berdasarkan work progress
-- **Work Documentation**: Submit progress reports dan final documentation
-- **NFT Issuance**: Generate permanent work certificates
+**Note: Bengkel interface TIDAK dikembangkan dalam project ini**
+- Integration akan dilakukan melalui API atau sistem eksternal
 
 ### Blockchain Infrastructure Features
-- **Explorer**: Web-based blockchain explorer dengan dark/light mode
+- **Explorer**: Web-based blockchain explorer dengan dark/light mode (NO admin interface)
 - **Smart Contract Verification**: Contract verification dan details
 - **Validator Network**: DPOS consensus dengan customizable validators
 - **Cross-chain Bridge**: Transfer aset antar blockchain networks
 - **Web3 Wallet**: Multi-chain support dengan transaction tracking
 - **Custom Token Support**: Add dan manage various tokens
+- **Point Exchange API**: Conversion service untuk Navi Points ke Navicoin
 
 ### Navicoin Utilities
 - **Register Fee**: Payment untuk platform registration
-- **Admin Fee**: Deducted dari funding sebelum disbursement
-- **Investor Tiers**: Investment limits berdasarkan token holdings
-- **Boosted Returns**: Higher returns untuk Navicoin holders/stakers
+- **Transaction Fee Discount**: Pemotongan fee ketika menggunakan Navicoin untuk transaksi
+- **Point Exchange**: 1:1 atau 1000:1 conversion rate (configurable dari Navidoc)
+- **Investor Benefits**: Enhanced features untuk Navicoin holders
 
 ### Security & Compliance
 - **Smart Contract Automation**: Transparent fund management
