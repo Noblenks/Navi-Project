@@ -1,0 +1,2672 @@
+# NAVI Project - Comprehensive Technical Specification
+
+## 1. Executive Summary
+
+NAVI adalah platform blockchain terintegrasi yang memfasilitasi pembiayaan perbaikan kapal melalui sistem investasi P2P (Peer-to-Peer) dengan dukungan tokenisasi berbasis Security Token Offering (STO). Platform ini menghubungkan empat pihak utama: pemilik kapal, investor, galangan kapal, dan sistem AI Navidoc untuk menciptakan ekosistem pembiayaan maritim yang transparan, efisien, dan terdesentralisasi.
+
+**Investment Value**: Rp 600.000.000 (Enam Ratus Juta Rupiah)  
+**Development Timeline**: 50 hari kerja (2 bulan)  
+**Maintenance**: 3 bulan post-launch
+
+## 2. Platform Architecture Overview
+
+### 2.1 System Components
+
+NAVI Ecosystem terdiri dari beberapa komponen utama yang saling terintegrasi:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              NAVI ECOSYSTEM                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────┐    ┌──────────────┐                     ┌─────────────┐    │
+│  │   NAVIDOC   │    │   PEMILIK    │                     │  INVESTOR   │    │
+│  │ (External)  │    │    KAPAL     │                     │             │    │
+│  │ +AI Points  │    │ (Borrower)   │                     │             │    │
+│  │ +Wallet     │    │              │                     │             │    │
+│  └──────┬──────┘    └──────┬───────┘                     └──────┬──────┘    │
+│         │                  │                                    │           │
+│         │ Points Exchange  │ Funding Request                    │ Investment│
+│         │ API             │                                    │           │
+│         │                  │                                    │           │
+│  ┌──────▼──────────────────▼────────────────────────────────────▼──────┐    │
+│  │                    NAVI BLOCKCHAIN PLATFORM                          │    │
+│  │                                                                       │    │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐ │    │
+│  │  │ P2P Lending │  │ STO Token    │  │ Smart       │  │ Point       │ │    │
+│  │  │ System      │  │ Management   │  │ Contracts   │  │ Exchange    │ │    │
+│  │  │             │  │              │  │             │  │ API         │ │    │
+│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘ │    │
+│  │                                                                       │    │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐ │    │
+│  │  │ STO         │  │ NFT          │  │ Cross-Chain │  │ Explorer    │ │    │
+│  │  │ Marketplace │  │ System       │  │ Bridge      │  │ & Wallet    │ │    │
+│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘ │    │
+│  └───────────────────────────────────────────────────────────────────────┘    │
+│                                                                             │
+│  ┌─────────────────────────────────────────────────────────────────────────┐ │
+│  │                        BLOCKCHAIN INFRASTRUCTURE                        │ │
+│  │                                                                         │ │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐   │ │
+│  │  │ DPOS        │  │ Validator    │  │ EVM/Solana  │  │ Native      │   │ │
+│  │  │ Consensus   │  │ Network      │  │ Support     │  │ Navicoin    │   │ │
+│  │  └─────────────┘  └──────────────┘  └─────────────┘  └─────────────┘   │ │
+│  └─────────────────────────────────────────────────────────────────────────┘ │
+│                                                                             │
+│  ┌─────────────────────────────────────────────────────────────────────────┐ │
+│  │                            ICO WEBSITE                                 │ │
+│  │                     (Token Sale Platform)                              │ │
+│  └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Note: GALANGAN KAPAL interface tidak dikembangkan dalam proyek ini
+```
+
+### 2.2 Component Relationships
+
+1. **NAVIDOC System** (External): Sistem AI yang mendeteksi kerusakan kapal dan memberikan rekomendasi perbaikan
+2. **NAVI Blockchain Platform**: Inti sistem yang mengelola semua transaksi dan smart contracts
+3. **P2P Lending System**: Platform yang memfasilitasi pendanaan antara investor dan pemilik kapal
+4. **STO Token Management**: Sistem pengelolaan token sekuritas yang mewakili investasi
+5. **Cross-Chain Bridge**: Sistem yang memungkinkan transfer aset antar blockchain
+6. **ICO Website**: Platform untuk penjualan token Navicoin
+
+## 3. Detailed Business Process Flow
+
+### 3.1 Complete Funding Request Process
+
+#### 3.1.1 Ship Damage Detection and Assessment
+1. **NAVIDOC AI Detection**:
+   - Sistem NAVIDOC secara otomatis memantau kondisi kapal yang terdaftar
+   - Algoritma AI mendeteksi kerusakan berdasarkan data sensor, visual inspection, dan historical data
+   - Sistem menganalisis tingkat severity kerusakan dan menentukan prioritas perbaikan
+
+2. **Repair Recommendation Generation**:
+   - NAVIDOC menghasilkan estimasi biaya perbaikan berdasarkan:
+     - Jenis dan tingkat kerusakan
+     - Database harga komponen dan labor cost
+     - Lokasi geografis kapal
+     - Availability galangan kapal di area tersebut
+   - Sistem memberikan multiple options dengan variasi:
+     - Tingkat kualitas perbaikan (basic, standard, premium)
+     - Timeline perbaikan (urgent, normal, scheduled)
+     - Galangan kapal yang direkomendasikan
+
+3. **Owner Approval Process**:
+   - Pemilik kapal menerima notifikasi melalui NAVIDOC dashboard
+   - Detail rekomendasi mencakup:
+     - Visual documentation kerusakan
+     - Technical specification perbaikan yang diperlukan
+     - Cost breakdown detail
+     - Recommended workshops dengan rating dan review
+     - Proposed payment schedule (tenor dan bunga)
+   - Pemilik dapat:
+     - Menyetujui rekomendasi as-is
+     - Memodifikasi beberapa parameter (budget, timeline)
+     - Menolak dan request re-assessment
+     - Memilih galangan kapal alternatif
+
+#### 3.1.2 Funding Campaign Creation
+1. **Data Submission ke NAVI Blockchain**:
+   - Setelah approval, NAVIDOC mengirimkan komprehensif data:
+     ```json
+     {
+       "ship_data": {
+         "id": "unique_ship_identifier",
+         "name": "Ship Name",
+         "type": "Cargo/Tanker/Passenger",
+         "size": "DWT/GT specifications",
+         "location": "Current port/coordinates",
+         "age": "Years since built",
+         "last_maintenance": "Date and details"
+       },
+       "damage_assessment": {
+         "damage_type": "Hull/Engine/Electrical/etc",
+         "severity_level": "1-10 scale",
+         "affected_areas": ["List of components"],
+         "repair_urgency": "Critical/High/Medium/Low"
+       },
+       "cost_estimation": {
+         "total_amount": "USD amount",
+         "breakdown": {
+           "materials": "Amount",
+           "labor": "Amount",
+           "equipment": "Amount",
+           "contingency": "Amount"
+         }
+       },
+       "workshop_details": {
+         "name": "Recommended workshop",
+         "location": "Workshop address",
+         "certification": ["List of certifications"],
+         "capacity": "Available slots"
+       },
+       "payment_terms": {
+         "loan_amount": "Total funding needed",
+         "interest_rate": "Annual percentage",
+         "tenor_months": "Repayment period",
+         "collateral": "Ship registration details"
+       }
+     }
+     ```
+
+2. **Smart Contract Campaign Generation**:
+   - NAVI Blockchain membuat campaign smart contract dengan parameters:
+     - Funding target amount
+     - Minimum dan maximum investment per investor
+     - Campaign duration (biasanya 30-60 hari)
+     - Interest rate dan repayment schedule
+     - Automatic execution conditions
+   - Smart contract mencakup:
+     - Fund collection mechanism
+     - STO token minting rules
+     - Fund disbursement triggers
+     - Repayment distribution logic
+
+3. **Fee Calculation dan Collection**:
+   - **Register Fee**: Dihitung sebagai persentase dari loan amount
+     - Dapat dibayar dengan Navicoin (dengan discount)
+     - Atau melalui Point Exchange API (konversi dari NAVIDOC points)
+     - Rate conversion: 1:1 atau 1000:1 (configurable)
+   - **Admin Fee**: Platform fee yang akan dipotong dari total funding
+   - Pembayaran fee menggunakan multi-signature wallet untuk security
+
+#### 3.1.3 Campaign Publication dan Marketing
+1. **Campaign Listing**:
+   - Campaign muncul di investor dashboard dengan informasi:
+     - Ship profile dan damage assessment
+     - Financial projections dan risk assessment
+     - Workshop reputation dan track record
+     - Historical performance similar campaigns
+   - Real-time funding progress tracking
+   - Risk rating berdasarkan multiple factors
+
+2. **Investor Due Diligence Support**:
+   - Dokumentasi lengkap tersedia untuk review
+   - Historical data kapal dan maintenance records
+   - Financial health assessment pemilik kapal
+   - Insurance coverage verification
+   - Legal documentation status
+
+### 3.2 Investment Process Flow
+
+#### 3.2.1 Investor Onboarding
+1. **Account Registration**:
+   - KYC verification process (identity, address, financial capacity)
+   - Risk tolerance assessment
+   - Investment experience questionnaire
+   - Multi-factor authentication setup
+
+2. **Wallet Integration**:
+   - Support untuk multiple wallet providers:
+     - MetaMask, WalletConnect, Coinbase Wallet
+     - Hardware wallets (Ledger, Trezor)
+     - Mobile wallets dengan WalletConnect
+   - Multi-chain support: Ethereum, BSC, Polygon, Solana
+
+#### 3.2.2 Investment Execution
+1. **Campaign Selection dan Analysis**:
+   - Investor dapat filter campaigns berdasarkan:
+     - Risk level (1-10 scale)
+     - Expected return range
+     - Investment amount range
+     - Geographic location
+     - Ship type preference
+   - Detailed analytics tersedia:
+     - ROI projections dengan different scenarios
+     - Risk-adjusted returns
+     - Liquidity analysis (STO marketplace activity)
+     - Comparative analysis dengan campaigns lain
+
+2. **Investment Transaction**:
+   - Support multiple payment methods:
+     - Stablecoins: USDT, USDC, SGD stablecoin
+     - Native blockchain tokens
+     - Navicoin (dengan bonus atau fee discount)
+   - Transaction process:
+     ```
+     User selects amount → Wallet approval → Smart contract validation 
+     → Fund transfer → STO token minting → Portfolio update
+     ```
+
+3. **STO Token Issuance**:
+   - Token di-mint secara otomatis setelah payment confirmed
+   - Token amount = Investment amount / Token price
+   - Token metadata includes:
+     - Campaign ID dan details
+     - Investment date dan amount
+     - Expected maturity date
+     - Projected returns
+   - Token compliance dengan security regulations
+
+#### 3.2.3 Post-Investment Management
+1. **Portfolio Monitoring**:
+   - Real-time dashboard menampilkan:
+     - Total investment value
+     - Active campaigns progress
+     - Projected returns calculation
+     - STO token values di marketplace
+   - Notification system untuk:
+     - Campaign milestones
+     - Repayment schedules
+     - Market opportunities
+
+2. **STO Marketplace Trading**:
+   - Investor dapat menjual STO tokens sebelum maturity
+   - Market-making mechanism untuk liquidity
+   - Price discovery berdasarkan:
+     - Remaining return potential
+     - Campaign progress dan risk assessment
+     - Market demand dan supply
+   - Trading fees menggunakan Navicoin untuk discount
+
+### 3.3 Fund Disbursement dan Project Execution
+
+#### 3.3.1 Funding Target Achievement
+1. **Campaign Completion Check**:
+   - Smart contract otomatis monitor funding progress
+   - Ketika target tercapai atau campaign deadline reached:
+     - Automatic notification ke semua stakeholders
+     - Fund lock-in period untuk final verifications
+     - KYC verification completion untuk all participants
+
+2. **Fund Release Triggers**:
+   - Multi-signature validation dari:
+     - NAVI platform administrators
+     - Workshop verification
+     - Ship location confirmation
+   - Automatic release conditions:
+     - Ship arrived at designated port
+     - Workshop readiness confirmation
+     - Insurance documentation verified
+
+#### 3.3.2 Workshop Integration dan Fund Management
+1. **Workshop Onboarding** (Note: Interface tidak dikembangkan):
+   - Workshop registration dan verification (manual process)
+   - Bank account setup untuk fund reception
+   - Capability assessment dan certification
+
+2. **Progressive Fund Disbursement**:
+   - Fund release berdasarkan milestone completion:
+     - 30% upon work commencement
+     - 40% at 50% completion milestone
+     - 25% upon work completion
+     - 5% after quality inspection passed
+   - Each disbursement requires:
+     - Progress photos dan documentation
+     - Workshop report submission
+     - Third-party verification (optional)
+
+#### 3.3.3 Work Documentation dan NFT Creation
+1. **Progress Documentation**:
+   - Workshop submits progress reports meliputi:
+     - Photo documentation sebelum, during, dan after
+     - Technical specifications work completed
+     - Quality control checklists
+     - Timeline actual vs planned
+
+2. **NFT Minting Process**:
+   - Setelah work completion, comprehensive report di-compile
+   - NFT (ERC-721) di-mint dengan metadata:
+     ```json
+     {
+       "title": "Ship Repair Documentation",
+       "ship_id": "Unique identifier",
+       "repair_date": "Completion date",
+       "workshop": "Workshop details",
+       "work_performed": "Detailed description",
+       "materials_used": "List dengan specifications",
+       "quality_certifications": "Inspection results",
+       "photos": "IPFS hashes untuk documentation",
+       "total_cost": "Actual vs estimated",
+       "warranty": "Warranty terms dan duration"
+     }
+     ```
+   - NFT ownership di-assign ke ship owner
+   - Investors mendapat read-only access based on STO token ownership
+
+### 3.4 Repayment Process dan Return Distribution
+
+#### 3.4.1 Repayment Schedule Management
+1. **Automated Repayment Scheduling**:
+   - Smart contract mencatat repayment schedule berdasarkan loan terms
+   - Monthly/quarterly payment reminders ke borrower
+   - Grace period dan penalty calculations untuk late payments
+
+2. **Payment Processing**:
+   - Borrower dapat pay menggunakan:
+     - Stablecoins (USDT, USDC, SGD)
+     - Native blockchain tokens
+     - Navicoin (dengan potential discount)
+   - Payment validation dan confirmation process
+   - Automatic distribution calculation
+
+#### 3.4.2 Return Distribution Process
+1. **Claim Verification**:
+   - Investors submit claim requests melalui platform
+   - Smart contract verifies:
+     - STO token ownership pada saat claim
+     - Token quantity untuk proportional calculation
+     - Payment availability dari borrower
+   - Anti-fraud mechanisms untuk prevent double claims
+
+2. **Proportional Distribution**:
+   - Returns distributed based on current STO token holdings
+   - Formula: `User Return = (User STO Tokens / Total STO Tokens) * Available Payment`
+   - Automatic calculation dan distribution execution
+   - Transaction fees minimal atau free untuk Navicoin holders
+
+3. **Tax Reporting Support**:
+   - Automatic generation tax documents untuk investors
+   - Transaction history export dalam various formats
+   - Compliance dengan local tax regulations
+
+## 4. Technical Architecture Deep Dive
+
+### 4.1 Blockchain Infrastructure
+
+#### 4.1.1 DPOS Consensus Mechanism
+**Delegated Proof of Stake Implementation**:
+- **Validator Selection**: 21 active validators selected melalui voting mechanism
+- **Block Production**: 3-second block times untuk fast transactions
+- **Validator Rotation**: Regular rotation berdasarkan stake dan performance
+- **Reward Structure**: 
+  - Block rewards distributed ke validators
+  - Transaction fees shared dengan token stakers
+  - Penalty mechanism untuk malicious behavior
+
+**Technical Specifications**:
+```javascript
+// Validator Configuration
+const validatorConfig = {
+  maxValidators: 21,
+  blockTime: 3000, // 3 seconds
+  epochLength: 86400, // 24 hours
+  minStakeRequired: 10000, // Navicoin
+  slashingPercentage: 5,
+  rewardDistribution: {
+    validators: 70,
+    stakers: 25,
+    development: 5
+  }
+}
+```
+
+#### 4.1.2 Multi-Chain Compatibility
+**EVM Compatibility**:
+- Full Ethereum Virtual Machine support
+- Solidity smart contract deployment
+- Web3.js dan Ethers.js integration
+- MetaMask dan other Ethereum wallets support
+
+**Solana Integration**:
+- Solana Program Library (SPL) token support
+- Anchor framework compatibility
+- Cross-chain asset transfers
+- Phantom wallet integration
+
+#### 4.1.3 Native Token (Navicoin) Economics
+**Token Utility Functions**:
+1. **Transaction Fees**: Primary gas token untuk network operations
+2. **Staking Rewards**: Earn rewards melalui validator delegation
+3. **Governance Voting**: Participate dalam protocol decisions
+4. **Platform Fee Discounts**: Reduced fees untuk P2P lending transactions
+5. **STO Marketplace Fees**: Lower trading fees pada secondary market
+
+**Tokenomics Structure**:
+```javascript
+const tokenomics = {
+  totalSupply: 1000000000, // 1 Billion Navicoin
+  distribution: {
+    publicSale: 40, // ICO allocation
+    team: 15,
+    development: 20,
+    marketing: 10,
+    reserve: 10,
+    ecosystem: 5
+  },
+  vestingSchedule: {
+    team: "24 months linear vesting",
+    development: "36 months linear vesting"
+  }
+}
+```
+
+### 4.2 Smart Contract Architecture
+
+#### 4.2.1 Campaign Management Contract
+**Core Functions**:
+```solidity
+contract CampaignManager {
+    struct Campaign {
+        uint256 id;
+        address borrower;
+        uint256 targetAmount;
+        uint256 currentAmount;
+        uint256 interestRate;
+        uint256 tenor;
+        uint256 deadline;
+        CampaignStatus status;
+        string shipData;
+        string repairDetails;
+    }
+    
+    mapping(uint256 => Campaign) public campaigns;
+    mapping(uint256 => address[]) public campaignInvestors;
+    mapping(address => uint256[]) public userInvestments;
+    
+    function createCampaign(
+        uint256 _targetAmount,
+        uint256 _interestRate,
+        uint256 _tenor,
+        string memory _shipData,
+        string memory _repairDetails
+    ) external returns (uint256 campaignId);
+    
+    function investInCampaign(uint256 _campaignId, uint256 _amount) external;
+    function claimReturns(uint256 _campaignId) external;
+    function makeRepayment(uint256 _campaignId, uint256 _amount) external;
+}
+```
+
+#### 4.2.2 STO Token Contract
+**Security Token Implementation**:
+```solidity
+contract STOToken is ERC20, ERC20Permit, AccessControl {
+    struct TokenInfo {
+        uint256 campaignId;
+        uint256 investmentAmount;
+        uint256 expectedReturns;
+        uint256 maturityDate;
+        bool isActive;
+    }
+    
+    mapping(address => TokenInfo[]) public holderTokens;
+    mapping(uint256 => uint256) public campaignTokenSupply;
+    
+    function mintSTO(
+        address _investor,
+        uint256 _campaignId,
+        uint256 _amount,
+        uint256 _expectedReturns
+    ) external onlyRole(MINTER_ROLE);
+    
+    function burnSTO(address _holder, uint256 _tokenId) external;
+    function transferWithRestrictions(address _to, uint256 _amount) external;
+}
+```
+
+#### 4.2.3 Point Exchange API Contract
+**NAVIDOC Points Integration**:
+```solidity
+contract PointExchange {
+    uint256 public conversionRate; // 1:1 or 1000:1
+    mapping(address => uint256) public naviPointsBalance;
+    
+    event PointsConverted(address user, uint256 points, uint256 navicoin);
+    
+    function setConversionRate(uint256 _rate) external onlyOwner;
+    
+    function convertPointsToNavicoin(uint256 _pointsAmount) external {
+        require(naviPointsBalance[msg.sender] >= _pointsAmount, "Insufficient points");
+        
+        uint256 navicoinsToMint = _pointsAmount / conversionRate;
+        naviPointsBalance[msg.sender] -= _pointsAmount;
+        
+        // Mint Navicoin to user
+        _mint(msg.sender, navicoinsToMint);
+        
+        emit PointsConverted(msg.sender, _pointsAmount, navicoinsToMint);
+    }
+}
+```
+
+### 4.3 Cross-Chain Bridge System
+
+#### 4.3.1 Bridge Architecture
+**Multi-Chain Asset Transfer**:
+- Support untuk Ethereum, BSC, Polygon, Solana
+- Lock-and-mint mechanism untuk asset transfers
+- Validator consensus untuk cross-chain transactions
+- Automatic relay system untuk seamless UX
+
+**Technical Implementation**:
+```javascript
+class CrossChainBridge {
+  constructor(config) {
+    this.supportedChains = config.chains;
+    this.validators = config.validators;
+    this.contractAddresses = config.contracts;
+  }
+  
+  async bridgeAsset(fromChain, toChain, asset, amount, recipient) {
+    // Validate transfer parameters
+    const validation = await this.validateTransfer(fromChain, toChain, asset, amount);
+    if (!validation.isValid) throw new Error(validation.error);
+    
+    // Lock assets on source chain
+    const lockTx = await this.lockAssets(fromChain, asset, amount);
+    
+    // Wait for validator confirmations
+    const confirmations = await this.waitForValidatorConsensus(lockTx.hash);
+    
+    // Mint assets on destination chain
+    const mintTx = await this.mintAssets(toChain, asset, amount, recipient);
+    
+    return {
+      lockTxHash: lockTx.hash,
+      mintTxHash: mintTx.hash,
+      status: 'completed'
+    };
+  }
+}
+```
+
+#### 4.3.2 Security Mechanisms
+**Multi-Signature Validation**:
+- Minimum 15 of 21 validator signatures required
+- Time-delayed withdrawals untuk large amounts
+- Emergency pause mechanism
+- Automatic fraud detection
+
+### 4.4 Explorer dan Wallet Integration
+
+#### 4.4.1 Blockchain Explorer Features
+
+**Core Explorer Functionality**:
+
+1. **Block Information Display**:
+```javascript
+const blockInfo = {
+  blockNumber: "Latest block height",
+  timestamp: "Block creation time",
+  transactions: "Number of transactions in block",
+  gasUsed: "Total gas consumed",
+  gasLimit: "Maximum gas limit",
+  validator: "Block producer address",
+  reward: "Block reward amount",
+  size: "Block size in bytes"
+}
+```
+
+2. **Transaction Details**:
+   - Transaction hash dan status
+   - From dan to addresses dengan labels
+   - Gas price, gas limit, gas used
+   - Transaction value dalam native token dan USD
+   - Smart contract interaction details
+   - Internal transactions tracking
+
+3. **Smart Contract Verification**:
+   - Source code verification dan publication
+   - ABI (Application Binary Interface) display
+   - Contract creation transaction
+   - Verified contract interaction history
+   - Read/Write functions interface
+
+4. **Address Analytics**:
+   - Address balance dalam multiple tokens
+   - Transaction history dengan filtering options
+   - Token holdings dengan current USD values
+   - Contract interaction patterns
+   - Address labels dan tags
+
+5. **Validator Information**:
+   - Current validator set dan voting power
+   - Validator performance metrics
+   - Delegation statistics
+   - Reward distribution history
+   - Validator uptime tracking
+
+**Advanced Explorer Features**:
+
+1. **Dark/Light Mode Toggle**:
+```css
+/* CSS Implementation Example */
+:root[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --text-primary: #333333;
+  --accent: #2563eb;
+}
+
+:root[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --text-primary: #ffffff;
+  --accent: #60a5fa;
+}
+```
+
+2. **Real-time Updates**:
+   - WebSocket connection untuk live data
+   - Auto-refresh untuk latest blocks dan transactions
+   - Push notifications untuk address monitoring
+   - Price alerts dan transaction notifications
+
+3. **Advanced Search Functionality**:
+   - Multi-parameter search (block, transaction, address)
+   - Filter by date range, transaction type, amount
+   - Search suggestions dan auto-complete
+   - Saved searches dan bookmarks
+
+#### 4.4.2 Web3 Wallet Implementation
+
+**Multi-Chain Wallet Features**:
+
+1. **Wallet Connection Support**:
+```javascript
+const walletConnectors = {
+  metamask: {
+    name: "MetaMask",
+    icon: "/images/metamask.svg",
+    connector: new MetaMaskConnector()
+  },
+  walletConnect: {
+    name: "WalletConnect",
+    icon: "/images/walletconnect.svg",
+    connector: new WalletConnectConnector()
+  },
+  coinbaseWallet: {
+    name: "Coinbase Wallet",
+    icon: "/images/coinbase.svg",
+    connector: new CoinbaseWalletConnector()
+  }
+};
+```
+
+2. **Multi-Chain Management**:
+   - Automatic network switching
+   - Chain-specific token balances
+   - Cross-chain transaction history
+   - Network status monitoring
+
+3. **Transaction Management**:
+   - Transaction history dengan details
+   - Pending transaction tracking
+   - Transaction receipt storage
+   - Gas price optimization suggestions
+
+4. **Custom Token Support**:
+```javascript
+async function addCustomToken(tokenAddress, chainId) {
+  try {
+    const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+    const name = await tokenContract.name();
+    const symbol = await tokenContract.symbol();
+    const decimals = await tokenContract.decimals();
+    
+    const token = {
+      address: tokenAddress,
+      name,
+      symbol,
+      decimals,
+      chainId,
+      isCustom: true
+    };
+    
+    // Add to wallet token list
+    await wallet.addToken(token);
+    return token;
+  } catch (error) {
+    throw new Error(`Failed to add custom token: ${error.message}`);
+  }
+}
+```
+
+5. **Price Integration**:
+   - Real-time token prices dari multiple sources
+   - Portfolio value calculation
+   - Price charts dan historical data
+   - Price alerts dan notifications
+
+### 4.5 P2P Lending Platform Architecture
+
+#### 4.5.1 Campaign Management System
+
+**Campaign Lifecycle Management**:
+
+1. **Campaign Creation Workflow**:
+```javascript
+const campaignCreationFlow = {
+  dataValidation: {
+    shipDetails: "Verify ship registration and ownership",
+    repairEstimate: "Validate cost estimation accuracy",
+    workshopVerification: "Confirm workshop credentials",
+    collateralAssessment: "Evaluate ship as collateral"
+  },
+  
+  smartContractDeployment: {
+    campaignParameters: "Set funding target, interest rate, tenor",
+    investmentRules: "Define minimum/maximum investment amounts",
+    distributionLogic: "Configure return distribution mechanism"
+  },
+  
+  publicationProcess: {
+    riskAssessment: "Calculate and display risk score",
+    marketingMaterials: "Generate investor presentation",
+    complianceCheck: "Ensure regulatory compliance"
+  }
+}
+```
+
+2. **Real-time Campaign Monitoring**:
+   - Funding progress tracking dengan visual indicators
+   - Investor acquisition analytics
+   - Time remaining countdown
+   - Market sentiment analysis
+
+3. **Campaign Success Criteria**:
+   - Minimum funding threshold (soft cap)
+   - Target funding amount (hard cap)
+   - Maximum campaign duration
+   - Investor diversification requirements
+
+#### 4.5.2 Investor Dashboard
+
+**Portfolio Management Interface**:
+
+1. **Investment Overview Dashboard**:
+```javascript
+const dashboardMetrics = {
+  totalInvested: "Sum of all active investments",
+  expectedReturns: "Projected returns based on current holdings",
+  realizedGains: "Actual returns received",
+  activeInvestments: "Number of ongoing campaigns",
+  riskExposure: "Portfolio risk assessment",
+  diversificationScore: "Investment spread analysis"
+}
+```
+
+2. **Investment Analytics**:
+   - Performance comparison dengan benchmark
+   - Risk-adjusted returns calculation
+   - Cashflow projections
+   - Tax reporting summaries
+
+3. **Investment Recommendations**:
+   - AI-powered investment suggestions berdasarkan risk profile
+   - Diversification recommendations
+   - Market opportunity alerts
+   - Trending campaigns dengan high demand
+
+#### 4.5.3 Risk Assessment Engine
+
+**Automated Risk Scoring**:
+
+1. **Ship Assessment Criteria**:
+```javascript
+const riskFactors = {
+  shipAge: {
+    weight: 0.15,
+    calculation: "Linear decay based on years since built"
+  },
+  maintenanceHistory: {
+    weight: 0.20,
+    calculation: "Score based on regularity and quality of past maintenance"
+  },
+  operationalStatus: {
+    weight: 0.25,
+    calculation: "Active vs idle time, route analysis"
+  },
+  marketConditions: {
+    weight: 0.20,
+    calculation: "Shipping industry indicators, regional factors"
+  },
+  borrowerCreditworthiness: {
+    weight: 0.20,
+    calculation: "Payment history, financial stability"
+  }
+}
+```
+
+2. **Dynamic Risk Updates**:
+   - Real-time market condition monitoring
+   - Ship tracking dan operational status
+   - Borrower financial health checks
+   - Industry trend analysis
+
+### 4.6 STO Marketplace Implementation
+
+#### 4.6.1 Token Trading Platform
+
+**Secondary Market Features**:
+
+1. **Order Book System**:
+```javascript
+const orderBookStructure = {
+  buyOrders: [
+    {
+      orderId: "unique_id",
+      tokenId: "STO token identifier",
+      price: "Price per token in USDT",
+      quantity: "Number of tokens",
+      investor: "Buyer address",
+      timestamp: "Order creation time",
+      expiryTime: "Order expiration",
+      status: "active/filled/cancelled"
+    }
+  ],
+  sellOrders: [
+    // Same structure as buy orders
+  ],
+  matchingEngine: {
+    priceTimePriority: true,
+    partialFills: true,
+    minimumOrderSize: 1
+  }
+}
+```
+
+2. **Automated Market Making**:
+   - Liquidity pools untuk popular STO tokens
+   - Automated price discovery mechanism
+   - Yield farming opportunities untuk liquidity providers
+   - Dynamic spread adjustment based on volatility
+
+3. **Trading Interface Features**:
+   - Real-time price charts dengan technical indicators
+   - Order history dan trade execution logs
+   - Portfolio performance tracking
+   - Advanced order types (limit, market, stop-loss)
+
+#### 4.6.2 Token Valuation Model
+
+**Dynamic Pricing Algorithm**:
+
+1. **Intrinsic Value Calculation**:
+```javascript
+function calculateSTOTokenValue(campaignId) {
+  const campaignData = getCampaignData(campaignId);
+  const remainingPayments = getRemainingPayments(campaignId);
+  const riskAdjustment = getRiskScore(campaignId);
+  
+  const presentValue = remainingPayments.reduce((pv, payment) => {
+    const discountRate = getMarketDiscountRate() + riskAdjustment;
+    const timeToPayment = payment.dueDate - Date.now();
+    return pv + (payment.amount / Math.pow(1 + discountRate, timeToPayment));
+  }, 0);
+  
+  return presentValue / campaignData.totalSTOTokens;
+}
+```
+
+2. **Market-based Pricing Factors**:
+   - Supply dan demand dynamics
+   - Comparable campaign performance
+   - Market sentiment indicators
+   - Liquidity premium/discount
+
+#### 4.6.3 Compliance dan Regulatory Features
+
+**Security Token Regulations Compliance**:
+
+1. **Investor Verification**:
+   - KYC/AML compliance automation
+   - Accredited investor verification
+   - Geographic restrictions enforcement
+   - Investment limits based on investor classification
+
+2. **Trading Restrictions**:
+```javascript
+const tradingRestrictions = {
+  holdingPeriod: {
+    minimumDays: 30,
+    applicableTo: "All initial investors"
+  },
+  transferRestrictions: {
+    whitelist: "Only verified addresses can receive tokens",
+    blacklist: "Prohibited addresses enforcement",
+    geographicLimits: "Country-based restrictions"
+  },
+  reportingRequirements: {
+    tradingVolume: "Daily/monthly reporting to regulators",
+    largeTransactions: "Automatic reporting above threshold",
+    suspiciousActivity: "ML-based detection and reporting"
+  }
+}
+```
+
+### 4.7 NFT Documentation System
+
+#### 4.7.1 Ship Repair Documentation NFT
+
+**NFT Metadata Structure**:
+
+1. **Comprehensive Repair Documentation**:
+```json
+{
+  "name": "Ship Repair Certificate #[UNIQUE_ID]",
+  "description": "Official documentation of ship repair work completed",
+  "external_url": "https://navi.platform/nft/[TOKEN_ID]",
+  "image": "ipfs://[HASH]/main_image.jpg",
+  "attributes": [
+    {
+      "trait_type": "Ship Name",
+      "value": "MV Ocean Carrier"
+    },
+    {
+      "trait_type": "Ship Type",
+      "value": "Container Ship"
+    },
+    {
+      "trait_type": "Repair Category",
+      "value": "Hull Maintenance"
+    },
+    {
+      "trait_type": "Workshop",
+      "value": "Jakarta Marine Services"
+    },
+    {
+      "trait_type": "Completion Date",
+      "value": "2025-03-15"
+    },
+    {
+      "trait_type": "Total Cost",
+      "value": "$125,000"
+    },
+    {
+      "trait_type": "Warranty Period",
+      "value": "24 months"
+    }
+  ],
+  "repair_details": {
+    "work_performed": [
+      "Hull blasting and repainting",
+      "Propeller shaft alignment",
+      "Engine room equipment maintenance"
+    ],
+    "materials_used": [
+      {
+        "item": "Marine paint",
+        "quantity": "500 liters",
+        "specification": "Epoxy primer + topcoat"
+      }
+    ],
+    "quality_certificates": [
+      "Class NK inspection certificate",
+      "Port state control clearance"
+    ],
+    "before_after_photos": {
+      "before": "ipfs://[HASH]/before/",
+      "during": "ipfs://[HASH]/progress/",
+      "after": "ipfs://[HASH]/completed/"
+    },
+    "technical_drawings": "ipfs://[HASH]/technical/",
+    "inspection_reports": "ipfs://[HASH]/inspection/"
+  }
+}
+```
+
+2. **IPFS Storage Implementation**:
+```javascript
+class NFTStorage {
+  constructor(ipfsConfig) {
+    this.ipfs = ipfsConfig;
+    this.pinataApiKey = ipfsConfig.pinataKey;
+  }
+  
+  async storeRepairDocumentation(repairData) {
+    // Upload images to IPFS
+    const imageHashes = await this.uploadImages(repairData.photos);
+    
+    // Upload documents to IPFS
+    const documentHashes = await this.uploadDocuments(repairData.documents);
+    
+    // Create metadata object
+    const metadata = {
+      ...repairData.basicInfo,
+      images: imageHashes,
+      documents: documentHashes,
+      timestamp: Date.now(),
+      verification_hash: this.createVerificationHash(repairData)
+    };
+    
+    // Upload metadata to IPFS
+    const metadataHash = await this.uploadMetadata(metadata);
+    
+    // Pin to ensure persistence
+    await this.pinToIPFS(metadataHash);
+    
+    return metadataHash;
+  }
+}
+```
+
+#### 4.7.2 Access Control System
+
+**Permission-based NFT Access**:
+
+1. **Stakeholder Access Levels**:
+```javascript
+const accessLevels = {
+  shipOwner: {
+    permissions: ["full_access", "transfer", "update_metadata"],
+    description: "Complete access to NFT and all documentation"
+  },
+  investors: {
+    permissions: ["read_only", "download_reports"],
+    description: "Read access based on STO token ownership",
+    verification: "Must hold valid STO tokens for the campaign"
+  },
+  workshop: {
+    permissions: ["read_only", "add_warranty_info"],
+    description: "Limited access to add warranty or service updates"
+  },
+  inspectors: {
+    permissions: ["read_only", "add_inspection_notes"],
+    description: "Third-party inspector access for verification"
+  },
+  regulators: {
+    permissions: ["read_only", "compliance_verification"],
+    description: "Regulatory body access for compliance checks"
+  }
+}
+```
+
+2. **Dynamic Access Verification**:
+```solidity
+contract RepairDocumentationNFT is ERC721, AccessControl {
+    mapping(uint256 => mapping(address => AccessLevel)) public tokenAccess;
+    mapping(uint256 => uint256) public tokenCampaignId;
+    
+    modifier hasAccess(uint256 tokenId, AccessLevel requiredLevel) {
+        require(
+            _hasTokenAccess(msg.sender, tokenId, requiredLevel),
+            "Insufficient access rights"
+        );
+        _;
+    }
+    
+    function _hasTokenAccess(address user, uint256 tokenId, AccessLevel level) 
+        internal view returns (bool) {
+        
+        // Ship owner has full access
+        if (ownerOf(tokenId) == user) return true;
+        
+        // Check STO token ownership for investors
+        if (level == AccessLevel.READ_ONLY) {
+            uint256 campaignId = tokenCampaignId[tokenId];
+            return STOToken(stoTokenAddress).balanceOf(user, campaignId) > 0;
+        }
+        
+        // Check role-based access
+        return hasRole(getRoleForAccessLevel(level), user);
+    }
+}
+```
+
+### 4.8 ICO Website Implementation
+
+#### 4.8.1 Token Sale Platform Features
+
+**Comprehensive ICO Interface**:
+
+1. **Project Information Display**:
+```javascript
+const icoSections = {
+  heroSection: {
+    components: ["Token sale countdown", "Current raised amount", "Token price", "Quick purchase widget"]
+  },
+  projectOverview: {
+    components: ["Vision and mission", "Problem solution fit", "Market opportunity", "Competitive advantages"]
+  },
+  tokenomics: {
+    components: ["Token distribution chart", "Vesting schedules", "Token utility explanation", "Economic model"]
+  },
+  roadmap: {
+    components: ["Development timeline", "Milestone achievements", "Future plans", "Partnership announcements"]
+  },
+  team: {
+    components: ["Core team profiles", "Advisory board", "Development team", "Partner organizations"]
+  }
+}
+```
+
+2. **Interactive Purchase Widget**:
+```javascript
+class TokenPurchaseWidget {
+  constructor(config) {
+    this.tokenPrice = config.currentPrice;
+    this.acceptedCurrencies = config.currencies;
+    this.minPurchase = config.minimumPurchase;
+    this.maxPurchase = config.maximumPurchase;
+  }
+  
+  async calculatePurchase(inputAmount, currency) {
+    const exchangeRate = await this.getExchangeRate(currency, 'USD');
+    const usdAmount = inputAmount * exchangeRate;
+    const tokenAmount = usdAmount / this.tokenPrice;
+    const bonus = this.calculateBonus(usdAmount);
+    
+    return {
+      inputAmount,
+      currency,
+      usdEquivalent: usdAmount,
+      tokensReceived: tokenAmount + bonus,
+      bonus: bonus,
+      fees: this.calculateFees(usdAmount)
+    };
+  }
+  
+  calculateBonus(usdAmount) {
+    const bonusTiers = [
+      { min: 10000, bonus: 0.20 },
+      { min: 5000, bonus: 0.15 },
+      { min: 1000, bonus: 0.10 },
+      { min: 100, bonus: 0.05 }
+    ];
+    
+    for (let tier of bonusTiers) {
+      if (usdAmount >= tier.min) {
+        return (usdAmount / this.tokenPrice) * tier.bonus;
+      }
+    }
+    return 0;
+  }
+}
+```
+
+#### 4.8.2 KYC Integration System
+
+**User Verification Workflow**:
+
+1. **Multi-tier KYC Process**:
+```javascript
+const kycLevels = {
+  basic: {
+    requirements: ["Email verification", "Phone number verification"],
+    purchaseLimit: 1000, // USD
+    verificationTime: "Instant"
+  },
+  standard: {
+    requirements: ["Government ID", "Address verification", "Selfie verification"],
+    purchaseLimit: 10000, // USD
+    verificationTime: "24-48 hours"
+  },
+  premium: {
+    requirements: ["Enhanced due diligence", "Source of funds verification", "Video call interview"],
+    purchaseLimit: "Unlimited",
+    verificationTime: "3-5 business days"
+  }
+}
+```
+
+2. **Document Verification API**:
+```javascript
+async function verifyUserDocuments(userId, documents) {
+  const verificationResults = {
+    identity: await verifyIdentityDocument(documents.passport || documents.nationalId),
+    address: await verifyAddressDocument(documents.addressProof),
+    selfie: await verifySelfieWithId(documents.selfie, documents.idDocument),
+    sanctions: await checkSanctionsList(documents.personalInfo)
+  };
+  
+  const overallScore = calculateVerificationScore(verificationResults);
+  const kycLevel = determineKYCLevel(overallScore);
+  
+  await updateUserKYCStatus(userId, kycLevel, verificationResults);
+  
+  return {
+    approved: overallScore >= 0.8,
+    kycLevel: kycLevel,
+    purchaseLimit: kycLevels[kycLevel].purchaseLimit,
+    verificationDetails: verificationResults
+  };
+}
+```
+
+### 4.9 Point Exchange API Integration
+
+#### 4.9.1 NAVIDOC Points System Integration
+
+**API Endpoint Specifications**:
+
+1. **Point Balance Verification**:
+```javascript
+// GET /api/points/balance/{userId}
+const pointsBalanceEndpoint = {
+  method: "GET",
+  url: "/api/points/balance/:userId",
+  headers: {
+    "Authorization": "Bearer [API_KEY]",
+    "Content-Type": "application/json"
+  },
+  response: {
+    userId: "string",
+    currentBalance: "number",
+    earnedToday: "number",
+    lifetimeEarned: "number",
+    lastUpdated: "datetime"
+  }
+}
+
+// POST /api/points/convert
+const convertPointsEndpoint = {
+  method: "POST",
+  url: "/api/points/convert",
+  body: {
+    userId: "string",
+    pointsToConvert: "number",
+    targetCurrency: "NAVICOIN",
+    conversionRate: "number" // 1:1 or 1000:1
+  },
+  response: {
+    transactionId: "string",
+    convertedAmount: "number",
+    remainingBalance: "number",
+    conversionRate: "number",
+    timestamp: "datetime"
+  }
+}
+```
+
+2. **Rate Configuration Management**:
+```javascript
+class PointExchangeManager {
+  constructor(config) {
+    this.defaultRate = config.defaultConversionRate;
+    this.rateHistory = [];
+    this.maxDailyConversion = config.dailyLimit;
+  }
+  
+  async setConversionRate(newRate, effectiveDate) {
+    // Validate rate change
+    if (newRate <= 0) throw new Error("Invalid conversion rate");
+    
+    // Store rate history
+    this.rateHistory.push({
+      rate: this.currentRate,
+      changedAt: Date.now(),
+      changedBy: this.adminAddress
+    });
+    
+    // Update current rate
+    this.currentRate = newRate;
+    this.effectiveDate = effectiveDate;
+    
+    // Emit rate change event
+    await this.emitRateChangeEvent(newRate, effectiveDate);
+    
+    return {
+      success: true,
+      newRate: newRate,
+      effectiveDate: effectiveDate,
+      previousRate: this.rateHistory[this.rateHistory.length - 1]?.rate
+    };
+  }
+  
+  async convertUserPoints(userId, pointsAmount) {
+    // Validate user and points
+    const userBalance = await this.getUserPointsBalance(userId);
+    if (userBalance < pointsAmount) {
+      throw new Error("Insufficient points balance");
+    }
+    
+    // Check daily conversion limit
+    const todayConversions = await this.getTodayConversions(userId);
+    if (todayConversions + pointsAmount > this.maxDailyConversion) {
+      throw new Error("Daily conversion limit exceeded");
+    }
+    
+    // Calculate Navicoin amount
+    const navicoinsToMint = pointsAmount / this.currentRate;
+    
+    // Execute conversion
+    const transaction = await this.executeConversion({
+      userId,
+      pointsAmount,
+      navicoinsAmount: navicoinsToMint,
+      rate: this.currentRate,
+      timestamp: Date.now()
+    });
+    
+    return transaction;
+  }
+}
+```
+
+#### 4.9.2 Conversion Monitoring dan Analytics
+
+**Real-time Conversion Tracking**:
+
+1. **Conversion Analytics Dashboard**:
+```javascript
+const conversionAnalytics = {
+  dailyMetrics: {
+    totalConversions: "Sum of all conversions today",
+    uniqueUsers: "Number of unique users who converted",
+    averageConversion: "Average points converted per user",
+    totalNavicoinsIssued: "Total Navicoin minted through conversions"
+  },
+  
+  trendAnalysis: {
+    conversionVelocity: "Rate of conversion over time",
+    userRetention: "Repeat conversion user percentage",
+    seasonalPatterns: "Time-based conversion patterns",
+    rateSensitivity: "Impact of rate changes on conversion volume"
+  },
+  
+  riskMetrics: {
+    largeConversions: "Transactions above threshold for review",
+    unusualPatterns: "Potential abuse detection",
+    systemLoad: "API performance metrics",
+    errorRates: "Failed conversion attempts"
+  }
+}
+```
+
+2. **Automated Alert System**:
+```javascript
+const alertSystem = {
+  rateChangeAlert: {
+    trigger: "When conversion rate is modified",
+    recipients: ["admin@navi.com", "finance@navi.com"],
+    template: "Rate change notification with before/after comparison"
+  },
+  
+  highVolumeAlert: {
+    trigger: "Daily conversion exceeds 10x average",
+    recipients: ["operations@navi.com"],
+    template: "High volume conversion alert with user details"
+  },
+  
+  systemErrorAlert: {
+    trigger: "API error rate exceeds 5%",
+    recipients: ["tech@navi.com"],
+    template: "Technical issue alert with error logs"
+  },
+  
+  complianceAlert: {
+    trigger: "Suspicious conversion patterns detected",
+    recipients: ["compliance@navi.com"],
+    template: "Potential abuse notification requiring investigation"
+  }
+}
+```
+
+## 5. Platform User Interfaces and Features
+
+### 5.1 Investor Interface Specifications
+
+#### 5.1.1 Investment Discovery Dashboard
+
+**Campaign Listing Interface**:
+
+1. **Advanced Filtering System**:
+```javascript
+const filterOptions = {
+  riskLevel: {
+    type: "range",
+    min: 1,
+    max: 10,
+    default: [3, 8],
+    description: "Investment risk rating"
+  },
+  
+  expectedReturn: {
+    type: "range",
+    min: 5,
+    max: 25,
+    default: [8, 18],
+    unit: "percentage",
+    description: "Annual expected return"
+  },
+  
+  investmentAmount: {
+    type: "range",
+    min: 100,
+    max: 100000,
+    default: [1000, 10000],
+    unit: "USD",
+    description: "Investment amount range"
+  },
+  
+  shipType: {
+    type: "multiSelect",
+    options: ["Container Ship", "Tanker", "Bulk Carrier", "Passenger", "Fishing Vessel"],
+    description: "Type of vessel requiring repair"
+  },
+  
+  geographicRegion: {
+    type: "multiSelect",
+    options: ["Southeast Asia", "East Asia", "Middle East", "Europe", "Americas"],
+    description: "Ship operational region"
+  },
+  
+  campaignStatus: {
+    type: "multiSelect",
+    options: ["Funding", "Funded", "In Progress", "Completed"],
+    description: "Current campaign phase"
+  }
+}
+```
+
+2. **Campaign Card Information Display**:
+```javascript
+const campaignCardLayout = {
+  header: {
+    shipImage: "Primary photo of the vessel",
+    riskBadge: "Color-coded risk level indicator",
+    statusIndicator: "Real-time funding status"
+  },
+  
+  basicInfo: {
+    shipName: "Vessel identification",
+    shipType: "Category classification",
+    location: "Current/repair location",
+    repairCategory: "Type of maintenance needed"
+  },
+  
+  financialData: {
+    targetAmount: "Total funding required",
+    currentFunding: "Amount raised so far",
+    fundingProgress: "Visual progress bar",
+    minimumInvestment: "Lowest investment allowed",
+    expectedReturn: "Projected annual return",
+    repaymentTerm: "Loan duration in months"
+  },
+  
+  additionalMetrics: {
+    timeRemaining: "Countdown to campaign end",
+    investorCount: "Number of current investors",
+    workshopRating: "Repair facility rating",
+    completionRate: "Historical success rate"
+  }
+}
+```
+
+#### 5.1.2 Detailed Campaign Analysis
+
+**Comprehensive Due Diligence Interface**:
+
+1. **Ship Information Deep Dive**:
+```javascript
+const shipAnalysisData = {
+  vesselSpecifications: {
+    technicalDetails: {
+      name: "Vessel name and registration",
+      type: "Ship classification",
+      builtYear: "Construction date",
+      flag: "Country of registration",
+      imo: "International Maritime Organization number",
+      dimensions: "Length, beam, draft specifications",
+      grossTonnage: "GT measurement",
+      deadweightTonnage: "DWT capacity"
+    },
+    
+    operationalHistory: {
+      routes: "Historical trading routes",
+      cargoes: "Types of cargo carried",
+      operationalDays: "Active days per year",
+      portCalls: "Frequency and locations",
+      incidents: "Any reported accidents or delays"
+    },
+    
+    maintenanceRecord: {
+      lastDrydock: "Most recent major maintenance",
+      inspectionHistory: "Port state control records",
+      classificationSociety: "Current class and validity",
+      insuranceStatus: "Coverage and provider",
+      flagStateInspections: "Regulatory compliance record"
+    }
+  }
+}
+```
+
+2. **Financial Analysis Tools**:
+```javascript
+const financialAnalysisTools = {
+  returnCalculator: {
+    inputs: ["Investment amount", "Interest rate", "Term length", "Risk adjustments"],
+    outputs: ["Monthly cashflow", "Total return", "IRR", "Payback period"],
+    scenarios: ["Best case", "Expected case", "Worst case"]
+  },
+  
+  riskAssessment: {
+    factors: {
+      marketRisk: "Shipping industry volatility",
+      creditRisk: "Borrower payment capability",
+      operationalRisk: "Ship operational factors",
+      regulatoryRisk: "Compliance and legal factors"
+    },
+    scoring: "1-10 scale with detailed explanations",
+    benchmarking: "Comparison with similar investments"
+  },
+  
+  sensitivityAnalysis: {
+    variables: ["Interest rates", "Repair costs", "Market conditions"],
+    impactCalculation: "Effect on expected returns",
+    visualization: "Interactive charts and graphs"
+  }
+}
+```
+
+#### 5.1.3 Portfolio Management Interface
+
+**Investment Tracking Dashboard**:
+
+1. **Portfolio Overview**:
+```javascript
+const portfolioMetrics = {
+  totalInvested: {
+    value: "Sum of all active investments",
+    breakdown: "By campaign, by ship type, by risk level",
+    currency: "Multi-currency display with USD equivalent"
+  },
+  
+  expectedReturns: {
+    totalProjected: "Sum of all expected returns",
+    weightedAPR: "Portfolio-wide expected annual return",
+    timeWeightedReturn: "Performance adjusted for timing",
+    riskAdjustedReturn: "Returns adjusted for risk taken"
+  },
+  
+  realizedGains: {
+    completedInvestments: "Returns from matured investments",
+    dividendsReceived: "Periodic payments received",
+    capitalGains: "Gains from STO token trading",
+    totalReturn: "All-in realized return percentage"
+  },
+  
+  activePositions: {
+    campaignsList: "All active investment positions",
+    fundingStatus: "Current status of each campaign",
+    nextPaymentDue: "Upcoming repayment schedules",
+    performanceTracking: "Individual campaign performance"
+  }
+}
+```
+
+2. **Advanced Portfolio Analytics**:
+```javascript
+const advancedAnalytics = {
+  diversificationAnalysis: {
+    byShipType: "Investment spread across vessel categories",
+    byGeography: "Geographic diversification analysis",
+    byRiskLevel: "Risk distribution assessment",
+    recommendations: "Suggestions for better diversification"
+  },
+  
+  performanceMetrics: {
+    sharpeRatio: "Risk-adjusted return measurement",
+    maximumDrawdown: "Largest portfolio decline",
+    volatility: "Portfolio return standard deviation",
+    beta: "Correlation with overall market performance"
+  },
+  
+  cashflowProjections: {
+    monthlyProjections: "Expected cashflows by month",
+    reinvestmentOptions: "Opportunities for compound growth",
+    liquidityAnalysis: "Available cash vs locked investments",
+    taxImplications: "Tax-efficient withdrawal strategies"
+  }
+}
+```
+
+### 5.2 Borrower (Ship Owner) Interface
+
+#### 5.2.1 Funding Request Management
+
+**Loan Application Interface**:
+
+1. **Ship Registration System**:
+```javascript
+const shipRegistrationForm = {
+  basicInformation: {
+    shipName: "Official vessel name",
+    imoNumber: "International Maritime Organization identifier",
+    registrationFlag: "Country of registration",
+    portOfRegistry: "Official port of registration",
+    ownershipDocuments: "Certificate of ownership upload"
+  },
+  
+  technicalSpecifications: {
+    vesselType: "Ship category selection",
+    constructionYear: "Year built",
+    shipyard: "Construction facility",
+    dimensions: "Length, breadth, depth measurements",
+    tonnage: "Gross and net tonnage",
+    engineDetails: "Main engine specifications",
+    propulsionType: "Propulsion system type"
+  },
+  
+  operationalData: {
+    tradingRoutes: "Primary operational routes",
+    cargoTypes: "Types of cargo typically carried",
+    averageUtilization: "Operational days per year",
+    crewSize: "Typical crew complement",
+    managementCompany: "Ship management details"
+  },
+  
+  complianceDocuments: {
+    classificationCertificate: "Current class certificate",
+    safetyManagementCertificate: "ISM certificate",
+    insuranceDocuments: "Hull and machinery insurance",
+    flagStateInspections: "Recent inspection reports"
+  }
+}
+```
+
+2. **Repair Request Specification**:
+```javascript
+const repairRequestForm = {
+  damageAssessment: {
+    affectedSystems: "Components requiring repair",
+    damageDescription: "Detailed description of issues",
+    urgencyLevel: "Repair priority classification",
+    photosVideos: "Visual documentation upload",
+    surveyorReports: "Professional damage assessment reports"
+  },
+  
+  repairSpecifications: {
+    workScope: "Detailed scope of repair work",
+    materialRequirements: "Specific materials and parts needed",
+    laborRequirements: "Estimated man-hours and skill levels",
+    specialEquipment: "Any specialized tools or equipment needed",
+    timelineEstimate: "Expected repair duration"
+  },
+  
+  costEstimation: {
+    materialCosts: "Cost breakdown for materials",
+    laborCosts: "Labor cost estimation",
+    equipmentRental: "Tool and equipment costs",
+    overheadCosts: "Additional expenses",
+    contingency: "Contingency percentage for unexpected costs",
+    totalEstimate: "Complete repair cost estimation"
+  },
+  
+  workshopPreference: {
+    preferredWorkshops: "Selected repair facilities",
+    locationConstraints: "Geographic preferences",
+    certificationRequirements: "Required workshop qualifications",
+    timelineConstraints: "Repair schedule requirements"
+  }
+}
+```
+
+#### 5.2.2 Campaign Monitoring Dashboard
+
+**Real-time Funding Progress Interface**:
+
+1. **Funding Status Display**:
+```javascript
+const fundingStatusDashboard = {
+  campaignOverview: {
+    fundingProgress: {
+      currentAmount: "Total raised so far",
+      targetAmount: "Required funding goal",
+      progressPercentage: "Visual progress indicator",
+      remainingAmount: "Still needed to reach target"
+    },
+    
+    timeMetrics: {
+      campaignStartDate: "When funding campaign began",
+      timeElapsed: "Days since campaign start",
+      timeRemaining: "Days left in campaign",
+      estimatedCompletion: "Projected funding completion date"
+    },
+    
+    investorMetrics: {
+      totalInvestors: "Number of people invested",
+      averageInvestment: "Mean investment amount",
+      largestInvestment: "Biggest single investment",
+      investmentDistribution: "Chart showing investment sizes"
+    }
+  },
+  
+  fundingAnalytics: {
+    dailyFundingTrend: "Daily investment amounts graph",
+    investorAcquisitionRate: "New investors per day",
+    conversionMetrics: "Visitor to investor conversion rate",
+    marketingEffectiveness: "Channel performance analysis"
+  }
+}
+```
+
+2. **Investor Communication Tools**:
+```javascript
+const communicationInterface = {
+  updatePosting: {
+    progressUpdates: "Regular updates on ship status and repair preparations",
+    photoUpdates: "Visual updates showing ship condition",
+    timelineAdjustments: "Notifications of any schedule changes",
+    financialUpdates: "Cost adjustments or additional funding needs"
+  },
+  
+  investorQuestions: {
+    qnaSection: "Public Q&A with potential investors",
+    privateMessaging: "Direct communication with major investors",
+    documentSharing: "Secure sharing of additional documentation",
+    videoUpdates: "Video messages from ship owners"
+  },
+  
+  transparencyReports: {
+    fundUtilization: "How raised funds will be used",
+    repairProgress: "Regular updates on repair status",
+    complianceUpdates: "Regulatory and certification updates",
+    financialReporting: "Ongoing financial transparency"
+  }
+}
+```
+
+#### 5.2.3 Repayment Management System
+
+**Loan Repayment Interface**:
+
+1. **Payment Scheduling Dashboard**:
+```javascript
+const repaymentDashboard = {
+  paymentSchedule: {
+    upcomingPayments: {
+      nextPaymentDue: "Date and amount of next payment",
+      paymentAmount: "Principal + interest breakdown",
+      remainingBalance: "Outstanding loan amount",
+      paymentsRemaining: "Number of payments left"
+    },
+    
+    paymentHistory: {
+      completedPayments: "List of all past payments",
+      paymentStatus: "On-time, late, or missed payments",
+      totalPaid: "Cumulative amount paid to date",
+      interestPaid: "Total interest paid so far"
+    },
+    
+    paymentProjections: {
+      totalRepaymentAmount: "Complete repayment including interest",
+      finalPaymentDate: "When loan will be fully repaid",
+      earlyPaymentOptions: "Prepayment terms and benefits",
+      refinancingOptions: "Available refinancing alternatives"
+    }
+  },
+  
+  paymentMethods: {
+    stablecoinPayments: {
+      supportedTokens: ["USDT", "USDC", "SGD stablecoin"],
+      walletIntegration: "Connect various crypto wallets",
+      autoPaymentSetup: "Recurring payment automation",
+      paymentConfirmation: "Instant payment verification"
+    },
+    
+    traditionalPayments: {
+      bankTransfer: "Wire transfer options",
+      digitalPayments: "Online payment gateways",
+      paymentPlans: "Flexible payment arrangements",
+      currencyConversion: "Multi-currency payment support"
+    },
+    
+    naviCoinPayments: {
+      discountStructure: "Payment discounts for using Navicoin",
+      pointsIntegration: "Use converted NAVIDOC points",
+      stakingBenefits: "Additional benefits for Navicoin holders",
+      loyaltyRewards: "Rewards for consistent Navicoin usage"
+    }
+  }
+}
+```
+
+### 5.3 Workshop Integration System (Note: Interface NOT Developed)
+
+#### 5.3.1 Workshop Verification Framework
+
+**Workshop Qualification System**:
+
+1. **Certification Requirements**:
+```javascript
+const workshopQualifications = {
+  basicRequirements: {
+    businessLicense: "Valid business registration",
+    insuranceCoverage: "Professional indemnity and public liability",
+    facilityCapacity: "Dry dock or repair facility specifications",
+    equipmentInventory: "List of available tools and machinery",
+    staffCertifications: "Qualified technician certifications"
+  },
+  
+  marineCertifications: {
+    classificationSociety: "Approved by major classification societies",
+    flagStateApproval: "Recognition by maritime authorities",
+    iso9001: "Quality management system certification",
+    iso14001: "Environmental management certification",
+    ohsas18001: "Occupational health and safety certification"
+  },
+  
+  trackRecordAssessment: {
+    completedProjects: "Historical repair project portfolio",
+    clientTestimonials: "References from previous customers",
+    qualityRatings: "Performance ratings from past projects",
+    financialStability: "Business financial health assessment",
+    disputeHistory: "Record of any customer disputes"
+  }
+}
+```
+
+2. **Performance Monitoring System**:
+```javascript
+const workshopMonitoring = {
+  projectMetrics: {
+    timelineCompliance: "On-time delivery rate",
+    budgetAdherence: "Cost overrun/underrun statistics",
+    qualityScores: "Customer satisfaction ratings",
+    safetyRecord: "Workplace safety incident reports",
+    environmentalCompliance: "Environmental regulation adherence"
+  },
+  
+  continuousAssessment: {
+    monthlyReviews: "Regular performance evaluations",
+    customerFeedback: "Ongoing client satisfaction surveys",
+    auditSchedule: "Periodic facility and process audits",
+    improvementPlans: "Continuous improvement initiatives",
+    performanceAlerts: "Early warning systems for issues"
+  }
+}
+```
+
+#### 5.3.2 Fund Disbursement Management
+
+**Progressive Payment System**:
+
+1. **Milestone-Based Payments**:
+```javascript
+const disbursementSchedule = {
+  workCommencementPayment: {
+    percentage: 30,
+    triggers: [
+      "Ship arrival at repair facility confirmed",
+      "Work commencement documentation submitted",
+      "Materials and equipment mobilized",
+      "Safety and environmental permits obtained"
+    ],
+    requiredDocumentation: [
+      "Ship docking confirmation",
+      "Work commencement certificate",
+      "Material procurement receipts",
+      "Safety briefing completion certificate"
+    ]
+  },
+  
+  midPointPayment: {
+    percentage: 40,
+    triggers: [
+      "50% work completion verified",
+      "Quality inspection milestone passed",
+      "No major issues or delays reported",
+      "Interim progress report submitted"
+    ],
+    requiredDocumentation: [
+      "Progress photos with timestamps",
+      "Technical progress report",
+      "Quality control checklist completion",
+      "Updated timeline and cost projections"
+    ]
+  },
+  
+  completionPayment: {
+    percentage: 25,
+    triggers: [
+      "All repair work completed",
+      "Final quality inspection passed",
+      "Ship ready for service",
+      "All certifications obtained"
+    ],
+    requiredDocumentation: [
+      "Work completion certificate",
+      "Final quality inspection report",
+      "Classification society approval",
+      "Customer acceptance certificate"
+    ]
+  },
+  
+  retentionPayment: {
+    percentage: 5,
+    triggers: [
+      "30-day warranty period completed",
+      "No warranty claims raised",
+      "Customer satisfaction confirmed",
+      "Final documentation submitted"
+    ],
+    requiredDocumentation: [
+      "Warranty compliance report",
+      "Final customer satisfaction survey",
+      "Complete project documentation package",
+      "NFT documentation preparation"
+    ]
+  }
+}
+```
+
+### 5.4 Admin Interface Specifications
+
+#### 5.4.1 Campaign Management Dashboard
+
+**Administrative Control Interface**:
+
+1. **Campaign Oversight System**:
+```javascript
+const adminCampaignInterface = {
+  campaignApproval: {
+    pendingReviews: "List of campaigns awaiting approval",
+    documentVerification: "Ship and borrower document validation",
+    riskAssessment: "Administrative risk evaluation",
+    complianceCheck: "Regulatory compliance verification",
+    approvalWorkflow: "Multi-step approval process management"
+  },
+  
+  activeCampaignMonitoring: {
+    fundingProgress: "Real-time tracking of all active campaigns",
+    investorActivity: "Investment patterns and investor behavior",
+    performanceMetrics: "Campaign success rate analytics",
+    issueAlerts: "Problems requiring administrative attention",
+    interventionTools: "Admin actions for problem campaigns"
+  },
+  
+  campaignAnalytics: {
+    successRates: "Historical campaign completion statistics",
+    averageFundingTime: "Time to reach funding targets",
+    investorPatterns: "Investor behavior and preferences analysis",
+    riskCorrelation: "Risk rating vs actual performance correlation",
+    marketTrends: "Platform usage and market trend analysis"
+  }
+}
+```
+
+2. **User Management System**:
+```javascript
+const userManagementInterface = {
+  investorManagement: {
+    userProfiles: "Comprehensive investor profile management",
+    kycStatus: "KYC verification status and documentation",
+    investmentHistory: "Complete investment transaction history",
+    riskProfileAssessment: "Investor risk tolerance and capacity",
+    communicationHistory: "All platform communications logged"
+  },
+  
+  borrowerManagement: {
+    shipOwnerProfiles: "Borrower profile and ship portfolio management",
+    creditworthinessAssessment: "Credit scoring and risk evaluation",
+    repaymentHistory: "Payment performance tracking",
+    defaultManagement: "Default prevention and recovery processes",
+    relationshipManagement: "Customer relationship management tools"
+  },
+  
+  workshopManagement: {
+    providerProfiles: "Workshop registration and qualification management",
+    performanceTracking: "Workshop performance metrics and ratings",
+    certificationManagement: "Certification status and renewal tracking",
+    disputeResolution: "Conflict resolution and arbitration tools",
+    capacityManagement: "Workshop availability and capacity planning"
+  }
+}
+```
+
+#### 5.4.2 Financial Management Interface
+
+**Platform Financial Administration**:
+
+1. **Revenue Management Dashboard**:
+```javascript
+const revenueManagement = {
+  feeCollection: {
+    registrationFees: "Campaign registration fee tracking",
+    platformFees: "Transaction and service fee collection",
+    tradingFees: "STO marketplace transaction fees",
+    naviCoinFees: "Native token transaction fees",
+    totalRevenue: "Aggregated platform revenue metrics"
+  },
+  
+  feeConfiguration: {
+    dynamicFeeStructure: "Configurable fee rates and structures",
+    discountManagement: "Navicoin holder discount administration",
+    promotionalOffers: "Special pricing and promotional campaigns",
+    tierBasedPricing: "Volume-based fee tier management",
+    revenueOptimization: "Fee structure performance analysis"
+  },
+  
+  financialReporting: {
+    dailyRevenue: "Daily platform revenue summaries",
+    monthlyFinancials: "Monthly financial performance reports",
+    profitabilityAnalysis: "Cost vs revenue analysis",
+    cashflowProjections: "Future revenue and cashflow forecasting",
+    auditTrails: "Complete financial transaction audit logs"
+  }
+}
+```
+
+2. **Treasury Management System**:
+```javascript
+const treasuryManagement = {
+  assetManagement: {
+    platformAssets: "Total platform-held assets across all tokens",
+    liquidityManagement: "Maintaining adequate liquidity for operations",
+    yieldOptimization: "Earning yield on idle platform assets",
+    riskManagement: "Treasury risk management and hedging strategies",
+    assetAllocation: "Strategic allocation of platform reserves"
+  },
+  
+  stablecoinManagement: {
+    multiCurrencySupport: "Managing USDT, USDC, SGD stablecoin reserves",
+    conversionManagement: "Inter-currency conversion and arbitrage",
+    liquidityProvision: "Ensuring adequate liquidity for all supported currencies",
+    priceStabilityMonitoring: "Monitoring stablecoin pegs and stability",
+    reserveRequirements: "Maintaining regulatory reserve requirements"
+  }
+}
+```
+
+### 5.5 STO Marketplace Advanced Features
+
+#### 5.5.1 Trading Platform Interface
+
+**Advanced Trading Features**:
+
+1. **Professional Trading Interface**:
+```javascript
+const tradingInterface = {
+  orderManagement: {
+    orderTypes: {
+      marketOrder: "Immediate execution at current market price",
+      limitOrder: "Execute at specific price or better",
+      stopLossOrder: "Sell when price falls below specified level",
+      stopLimitOrder: "Stop order that becomes limit order when triggered",
+      trailingStop: "Stop order that adjusts with favorable price movement"
+    },
+    
+    orderBookDisplay: {
+      depthChart: "Visual representation of buy/sell order depth",
+      spreadAnalysis: "Real-time bid-ask spread calculation",
+      liquidityIndicators: "Available liquidity at different price levels",
+      orderFlowVisualization: "Recent order flow and execution patterns"
+    },
+    
+    executionFeatures: {
+      partialFills: "Support for partial order execution",
+      timeInForce: "Good till cancelled, day orders, immediate or cancel",
+      minimumFillSize: "Minimum execution size requirements",
+      slippage: "Price slippage monitoring and protection"
+    }
+  },
+  
+  portfolioIntegration: {
+    positionTracking: "Real-time position updates across all holdings",
+    pnlCalculation: "Unrealized and realized profit/loss tracking",
+    riskMetrics: "Portfolio risk exposure and concentration analysis",
+    marginRequirements: "If margin trading is supported in future",
+    positionSizing: "Recommended position sizes based on risk tolerance"
+  }
+}
+```
+
+2. **Market Analysis Tools**:
+```javascript
+const marketAnalysisTools = {
+  priceCharting: {
+    technicalIndicators: [
+      "Moving averages (SMA, EMA)",
+      "Relative Strength Index (RSI)",
+      "MACD (Moving Average Convergence Divergence)",
+      "Bollinger Bands",
+      "Volume indicators"
+    ],
+    
+    chartTypes: [
+      "Candlestick charts with OHLC data",
+      "Line charts for price trends",
+      "Volume charts for trading activity",
+      "Area charts for cumulative metrics"
+    ],
+    
+    timeframes: [
+      "1 minute, 5 minute, 15 minute intraday",
+      "1 hour, 4 hour short-term",
+      "Daily, weekly, monthly long-term"
+    ]
+  },
+  
+  fundamentalAnalysis: {
+    campaignMetrics: "Underlying campaign performance data",
+    returnAnalysis: "Expected vs actual return analysis",
+    riskAssessment: "Ongoing risk factor monitoring",
+    comparisonTools: "Compare similar STO tokens performance",
+    valuationModels: "DCF and other valuation methodologies"
+  }
+}
+```
+
+#### 5.5.2 Liquidity Management System
+
+**Market Making and Liquidity Provision**:
+
+1. **Automated Market Making**:
+```javascript
+const marketMakingSystem = {
+  liquidityPools: {
+    poolCreation: "Create liquidity pools for STO token pairs",
+    liquidityProvision: "Users can provide liquidity for trading fees",
+    impermanentLoss: "Protection mechanisms for liquidity providers",
+    yieldFarming: "Additional incentives for liquidity provision",
+    poolRebalancing: "Automatic rebalancing of pool ratios"
+  },
+  
+  pricingMechanisms: {
+    constantProductFormula: "Uniswap-style AMM pricing",
+    oracleIntegration: "External price feed integration",
+    slippageMinimization: "Advanced routing to minimize price impact",
+    arbitrageProtection: "MEV protection and sandwich attack prevention",
+    dynamicFees: "Fee adjustment based on market volatility"
+  },
+  
+  incentivePrograms: {
+    liquidityMining: "Token rewards for liquidity providers",
+    tradingRewards: "Volume-based trading incentives",
+    stakingPrograms: "Additional yield for token staking",
+    referralPrograms: "User acquisition through referrals",
+    loyaltyPrograms: "Long-term user retention incentives"
+  }
+}
+```
+
+2. **Cross-Platform Integration**:
+```javascript
+const crossPlatformFeatures = {
+  externalExchangeIntegration: {
+    dexAggregation: "Integration with external DEXs for best prices",
+    cexConnections: "Potential centralized exchange listings",
+    crossChainBridging: "Trade STO tokens across different blockchains",
+    arbitrageOpportunities: "Cross-platform arbitrage detection",
+    liquidityAggregation: "Combine liquidity from multiple sources"
+  },
+  
+  institutionalFeatures: {
+    bulkTrading: "Large order execution with minimal market impact",
+    institutionalOnboarding: "Specialized KYC for institutional investors",
+    custodialServices: "Third-party custody integration options",
+    reportingTools: "Institutional-grade reporting and compliance",
+    apiAccess: "Professional trading API for algorithmic trading"
+  }
+}
+```
+
+## 6. Implementation Timeline and Milestones
+
+### 6.1 Development Phases
+
+#### 6.1.1 Phase 1: Foundation Infrastructure (Days 1-25)
+
+**Week 1-2: Blockchain Core Development**
+```javascript
+const phase1Week1_2 = {
+  blockchainInfrastructure: {
+    dposConsensus: {
+      validatorSelection: "Implement validator selection mechanism",
+      blockProduction: "3-second block time implementation",
+      rewardDistribution: "Staking reward calculation and distribution",
+      slashingMechanism: "Validator penalty system for malicious behavior"
+    },
+    
+    evmCompatibility: {
+      virtualMachine: "Ethereum Virtual Machine integration",
+      gasMetering: "Transaction fee calculation system",
+      smartContractSupport: "Solidity contract deployment support",
+      web3Integration: "Web3.js and Ethers.js compatibility"
+    },
+    
+    nativeToken: {
+      naviCoinImplementation: "Native token smart contract",
+      tokenomics: "Distribution and vesting mechanisms",
+      staking: "Proof-of-stake delegation system",
+      governance: "Voting and proposal mechanisms"
+    }
+  }
+}
+
+const phase1Week3_4 = {
+  coreServices: {
+    explorerDevelopment: {
+      blockExplorer: "Web-based blockchain explorer",
+      transactionTracking: "Transaction history and details",
+      addressAnalytics: "Address balance and activity tracking",
+      smartContractVerification: "Contract verification system"
+    },
+    
+    walletIntegration: {
+      web3Wallet: "Multi-chain wallet support",
+      transactionManagement: "Transaction signing and broadcasting",
+      tokenSupport: "Multi-token balance management",
+      securityFeatures: "Private key management and encryption"
+    },
+    
+    bridgeSystem: {
+      crossChainBridge: "Asset transfer between chains",
+      validatorConsensus: "Multi-signature bridge validation",
+      assetLocking: "Lock and mint mechanism implementation",
+      securityAudits: "Bridge security and testing"
+    }
+  }
+}
+```
+
+**Week 3-4: ICO Website Development**
+```javascript
+const icoWebsiteDevelopment = {
+  frontendDevelopment: {
+    userInterface: "Modern, responsive ICO website design",
+    tokenSaleWidget: "Interactive token purchase interface",
+    kycIntegration: "User verification system integration",
+    walletConnection: "Multi-wallet connection support"
+  },
+  
+  backendServices: {
+    tokenSaleContract: "Smart contract for token distribution",
+    paymentProcessing: "Multi-currency payment handling",
+    userManagement: "Account creation and management",
+    analyticsIntegration: "Sales tracking and reporting"
+  },
+  
+  contentManagement: {
+    projectDocumentation: "Whitepaper and technical documentation",
+    teamProfiles: "Team member information and credentials",
+    roadmapTimeline: "Project development timeline",
+    tokenomicsDisplay: "Token distribution and utility explanation"
+  }
+}
+```
+
+#### 6.1.2 Phase 2: Platform Development (Days 26-50)
+
+**Week 5-6: P2P Lending System**
+```javascript
+const phase2Week5_6 = {
+  lendingPlatform: {
+    campaignManagement: {
+      campaignCreation: "Ship repair funding campaign system",
+      dataValidation: "Ship and borrower information verification",
+      riskAssessment: "Automated risk scoring algorithm",
+      approvalWorkflow: "Multi-step campaign approval process"
+    },
+    
+    investmentSystem: {
+      investorOnboarding: "KYC and investor verification",
+      investmentExecution: "Multi-currency investment processing",
+      portfolioManagement: "Investor dashboard and analytics",
+      returnCalculation: "ROI and payment distribution system"
+    },
+    
+    smartContracts: {
+      lendingContracts: "Automated lending and repayment contracts",
+      escrowSystem: "Secure fund holding and release mechanism",
+      repaymentScheduling: "Automated payment scheduling and tracking",
+      defaultHandling: "Default prevention and recovery procedures"
+    }
+  }
+}
+
+const phase2Week7_8 = {
+  stoAndMarketplace: {
+    stoTokenSystem: {
+      tokenCreation: "Security token creation and management",
+      complianceFramework: "Regulatory compliance integration",
+      ownershipTracking: "Token holder rights and benefits tracking",
+      transferRestrictions: "Compliance-based transfer limitations"
+    },
+    
+    marketplace: {
+      tradingEngine: "Order book and matching engine",
+      liquidityManagement: "Market making and liquidity provision",
+      priceDiscovery: "Fair market value determination",
+      tradingInterface: "Professional trading dashboard"
+    },
+    
+    nftSystem: {
+      documentationNFT: "Ship repair documentation NFTs",
+      ipfsIntegration: "Decentralized storage for documents",
+      accessControl: "Stakeholder-based access management",
+      metadataManagement: "Rich metadata for repair documentation"
+    }
+  }
+}
+```
+
+### 6.2 Quality Assurance and Testing
+
+#### 6.2.1 Testing Methodology
+
+**Comprehensive Testing Strategy**:
+```javascript
+const testingStrategy = {
+  unitTesting: {
+    smartContractTesting: {
+      coverage: "95%+ code coverage requirement",
+      tools: ["Hardhat", "Truffle", "Waffle"],
+      testScenarios: ["Normal operations", "Edge cases", "Failure conditions"],
+      gasOptimization: "Gas usage optimization and testing"
+    },
+    
+    frontendTesting: {
+      componentTesting: "Individual component functionality",
+      integrationTesting: "Component interaction testing",
+      userInterfaceTesting: "UI/UX testing across devices",
+      performanceTesting: "Load time and responsiveness testing"
+    }
+  },
+  
+  systemTesting: {
+    endToEndTesting: {
+      userJourneys: "Complete user workflow testing",
+      crossBrowserTesting: "Compatibility across different browsers",
+      mobileResponsiveness: "Mobile device compatibility testing",
+      accessibilityTesting: "WCAG compliance testing"
+    },
+    
+    securityTesting: {
+      penetrationTesting: "Security vulnerability assessment",
+      smartContractAudits: "Third-party security audits",
+      dataProtection: "Privacy and data security testing",
+      consensusTesting: "Blockchain consensus mechanism testing"
+    }
+  },
+  
+  performanceTesting: {
+    loadTesting: {
+      concurrentUsers: "Multi-user load simulation",
+      transactionThroughput: "Blockchain transaction capacity testing",
+      databasePerformance: "Database query optimization",
+      apiPerformance: "API response time and reliability"
+    },
+    
+    stressTesting: {
+      extremeLoads: "System behavior under extreme conditions",
+      failureRecovery: "System recovery from failures",
+      memoryUsage: "Memory leak and usage optimization",
+      networkLatency: "Performance under different network conditions"
+    }
+  }
+}
+```
+
+### 6.3 Deployment and Go-Live Strategy
+
+#### 6.3.1 Mainnet Deployment Process
+
+**Production Deployment Checklist**:
+```javascript
+const deploymentProcess = {
+  preDeployment: {
+    securityAudits: {
+      smartContractAudit: "Professional third-party security audit",
+      infrastructureAudit: "Server and network security assessment",
+      codeReview: "Peer code review and approval",
+      vulnerabilityScanning: "Automated security scanning"
+    },
+    
+    dataBackup: {
+      databaseBackup: "Complete database backup procedures",
+      configurationBackup: "System configuration backup",
+      recoveryProcedures: "Disaster recovery plan testing",
+      rollbackStrategy: "Quick rollback procedures if needed"
+    }
+  },
+  
+  deployment: {
+    infrastructureSetup: {
+      serverProvisioning: "Production server setup and configuration",
+      databaseSetup: "Production database configuration",
+      monitoringSetup: "System monitoring and alerting setup",
+      securityConfiguration: "Firewall and security settings"
+    },
+    
+    applicationDeployment: {
+      smartContractDeployment: "Blockchain contract deployment",
+      frontendDeployment: "Web application deployment",
+      backendDeployment: "API and service deployment",
+      configurationManagement: "Environment-specific configurations"
+    }
+  },
+  
+  postDeployment: {
+    systemVerification: {
+      functionalTesting: "Post-deployment functionality verification",
+      performanceVerification: "System performance validation",
+      integrationTesting: "External service integration verification",
+      userAcceptanceTesting: "Stakeholder acceptance testing"
+    },
+    
+    monitoring: {
+      systemMonitoring: "Real-time system health monitoring",
+      errorTracking: "Error logging and alerting",
+      performanceMetrics: "Performance monitoring and optimization",
+      userAnalytics: "User behavior and system usage analytics"
+    }
+  }
+}
+```
+
+## 7. Risk Management and Security Framework
+
+### 7.1 Technical Risk Mitigation
+
+#### 7.1.1 Smart Contract Security
+
+**Contract Security Framework**:
+```solidity
+// Example: Comprehensive security implementation
+contract SecureLendingPlatform {
+    using SafeMath for uint256;
+    
+    // Security modifiers
+    modifier nonReentrant() {
+        require(!_locked, "ReentrancyGuard: reentrant call");
+        _locked = true;
+        _;
+        _locked = false;
+    }
+    
+    modifier onlyAuthorized(bytes32 role) {
+        require(hasRole(role, msg.sender), "Access denied");
+        _;
+    }
+    
+    modifier whenNotPaused() {
+        require(!paused(), "Contract is paused");
+        _;
+    }
+    
+    // Emergency controls
+    bool private _locked;
+    bool private _paused;
+    address public emergencyContact;
+    
+    // Multi-signature requirements for critical functions
+    mapping(bytes32 => uint256) public proposalVotes;
+    mapping(bytes32 => mapping(address => bool)) public hasVoted;
+    uint256 public constant REQUIRED_CONFIRMATIONS = 3;
+    
+    event EmergencyPause(address indexed caller, uint256 timestamp);
+    event SecurityBreach(address indexed attacker, string details);
+    
+    // Secure investment function with multiple safeguards
+    function investInCampaign(uint256 campaignId, uint256 amount) 
+        external 
+        nonReentrant 
+        whenNotPaused 
+        onlyAuthorized(INVESTOR_ROLE) 
+    {
+        Campaign storage campaign = campaigns[campaignId];
+        
+        // Input validation
+        require(campaignId > 0 && campaignId <= campaignCount, "Invalid campaign");
+        require(amount >= campaign.minInvestment, "Below minimum investment");
+        require(amount <= campaign.maxInvestment, "Exceeds maximum investment");
+        require(campaign.status == CampaignStatus.ACTIVE, "Campaign not active");
+        
+        // Additional security checks
+        require(block.timestamp <= campaign.deadline, "Campaign expired");
+        require(campaign.currentAmount.add(amount) <= campaign.targetAmount, "Exceeds target");
+        
+        // Perform investment
+        _processInvestment(campaignId, amount, msg.sender);
+        
+        emit InvestmentMade(campaignId, msg.sender, amount, block.timestamp);
+    }
+    
+    // Emergency pause function
+    function emergencyPause() external onlyAuthorized(ADMIN_ROLE) {
+        _paused = true;
+        emit EmergencyPause(msg.sender, block.timestamp);
+    }
+}
+```
+
+#### 7.1.2 Bridge Security Implementation
+
+**Cross-Chain Bridge Security**:
+```javascript
+class SecureBridge {
+  constructor(config) {
+    this.validators = config.validators;
+    this.requiredConfirmations = config.requiredConfirmations;
+    this.maxDailyLimit = config.maxDailyLimit;
+    this.pauseContract = config.pauseContract;
+  }
+  
+  async secureBridgeTransfer(fromChain, toChain, asset, amount, recipient) {
+    // Security validations
+    await this.validateTransfer(fromChain, toChain, asset, amount);
+    await this.checkDailyLimits(asset, amount);
+    await this.verifyRecipient(recipient, toChain);
+    
+    // Multi-signature validation
+    const transferHash = this.generateTransferHash(fromChain, toChain, asset, amount, recipient);
+    const signatures = await this.collectValidatorSignatures(transferHash);
+    
+    if (signatures.length < this.requiredConfirmations) {
+      throw new Error("Insufficient validator confirmations");
+    }
+    
+    // Time-delayed execution for large amounts
+    if (amount > this.maxInstantTransfer) {
+      await this.scheduleDelayedTransfer(transferHash, 24 * 60 * 60 * 1000); // 24 hours
+      return { status: 'delayed', executeAt: Date.now() + 24 * 60 * 60 * 1000 };
+    }
+    
+    // Execute transfer
+    return await this.executeTransfer(fromChain, toChain, asset, amount, recipient, signatures);
+  }
+  
+  async detectAnomalousActivity(transferData) {
+    const patterns = [
+      this.checkVelocityLimits(transferData),
+      this.analyzeTransferPatterns(transferData),
+      this.validateAddressReputation(transferData.recipient),
+      this.checkBlacklist(transferData.recipient)
+    ];
+    
+    const suspiciousActivity = patterns.some(pattern => pattern.isSuspicious);
+    
+    if (suspiciousActivity) {
+      await this.triggerSecurityAlert(transferData);
+      return false; // Block transfer
+    }
+    
+    return true; // Allow transfer
+  }
+}
+```
+
+### 7.2 Financial Risk Management
+
+#### 7.2.1 Liquidity Risk Management
+
+**Liquidity Management Framework**:
+```javascript
+const liquidityManagement = {
+  reserveRequirements: {
+    stablecoinReserves: {
+      usdt: "Minimum 5% of outstanding loans",
+      usdc: "Minimum 5% of outstanding loans", 
+      sgd: "Minimum 3% of outstanding loans"
+    },
+    
+    naviCoinReserves: {
+      operationalReserve: "2% of total supply for operations",
+      emergencyReserve: "5% of total supply for emergencies",
+      marketMakingReserve: "3% of total supply for price stability"
+    },
+    
+    liquidityBuffers: {
+      withdrawalBuffer: "Sufficient liquidity for 30-day withdrawal projections",
+      campaignFunding: "Reserved funds for approved campaigns",
+      operationalCosts: "6-month operational cost coverage"
+    }
+  },
+  
+  riskMonitoring: {
+    liquidityMetrics: {
+      liquidityRatio: "Available liquidity / Outstanding obligations",
+      withdrawalVelocity: "Rate of investor withdrawals",
+      fundingDemand: "Campaign funding demand trends",
+      marketVolatility: "Token price volatility impact on reserves"
+    },
+    
+    earlyWarningSystem: {
+      thresholds: {
+        liquidityRatio: "Alert if below 15%",
+        dailyWithdrawals: "Alert if exceeds 5% of reserves",
+        campaignDefaults: "Alert if default rate exceeds 2%",
+        tokenVolatility: "Alert if price moves >20% daily"
+      },
+      
+      responseProtocols: {
+        level1: "Increase reserves, slow new campaign approvals",
+        level2: "Restrict large withdrawals, pause new campaigns",
+        level3: "Emergency protocols, suspend operations if necessary"
+      }
+    }
+  }
+}
+```
+
+#### 7.2.2 Credit Risk Assessment
+
+**Advanced Credit Scoring System**:
+```javascript
+class CreditRiskEngine {
+  constructor(config) {
+    this.weightsConfig = config.riskWeights;
+    this.historicalData = config.historicalPerformance;
+    this.externalDataSources = config.externalAPIs;
+  }
+  
+  async calculateCreditScore(borrowerData, shipData, campaignData) {
+    const scoreComponents = {
+      borrowerProfile: await this.assessBorrowerCreditworthiness(borrowerData),
+      shipAsset: await this.evaluateShipAsCollateral(shipData),
+      campaignViability: await this.analyzeCampaignFeasibility(campaignData),
+      marketConditions: await this.assessMarketRisk(),
+      operationalFactors: await this.evaluateOperationalRisks(shipData)
+    };
+    
+    const weightedScore = this.calculateWeightedScore(scoreComponents);
+    const adjustedScore = this.applyMarketAdjustments(weightedScore);
+    
+    return {
+      overallScore: adjustedScore,
+      riskGrade: this.assignRiskGrade(adjustedScore),
+      riskFactors: this.identifyKeyRiskFactors(scoreComponents),
+      recommendedInterestRate: this.calculateRiskBasedRate(adjustedScore),
+      maxLoanAmount: this.calculateMaxExposure(adjustedScore, shipData.value)
+    };
+  }
+  
+  async assessBorrowerCreditworthiness(borrowerData) {
+    const factors = {
+      paymentHistory: await this.analyzePaymentHistory(borrowerData.id),
+      financialStability: await this.assessFinancialHealth(borrowerData.financials),
+      industryExperience: this.evaluateExperience(borrowerData.experience),
+      reputationScore: await this.calculateReputationScore(borrowerData.id),
+      guarantees: this.assessGuarantees(borrowerData.guarantees)
+    };
+    
+    return this.weightedAverage(factors, this.weightsConfig.borrower);
+  }
+  
+  async evaluateShipAsCollateral(shipData) {
+    const valuation = {
+      marketValue: await this.getShipMarketValue(shipData),
+      condition: await this.assessSh
