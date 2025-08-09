@@ -103,7 +103,7 @@ Catatan: Interface bengkel tidak dikembangkan dalam proyek ini
 
 ### 5.1 Infrastruktur Blockchain
 - **Consensus**: DPOS (Delegated Proof of Stake)
-- **Compatibility**: EVM/Solana support
+- **Compatibility**: EVM support
 - **Native Token**: Navicoin
 - **Explorer**: Berbasis web dengan dark/light mode
 - **Validator Network**: Sistem validator yang dapat dikustomisasi
@@ -179,7 +179,7 @@ Catatan: Interface bengkel tidak dikembangkan dalam proyek ini
 - **Security Services**: Web Application Firewall (WAF)
 
 #### 5.3.5 API & Integration Dependencies
-- **Blockchain RPC**: Ethereum dan Solana node access
+- **Blockchain RPC**: Ethereum node access
 - **Price Feed Oracle**: Chainlink atau equivalent untuk currency rates
 - **KYC Service**: Jumio atau Onfido untuk identity verification
 - **Payment Gateway**: Integration dengan exchange untuk fiat on-ramp
@@ -188,7 +188,7 @@ Catatan: Interface bengkel tidak dikembangkan dalam proyek ini
 #### 5.3.6 Development Tools & Framework
 - **Backend Framework**: Node.js dengan Express atau Python Django
 - **Frontend Framework**: React.js atau Vue.js untuk web interface
-- **Mobile Framework**: React Native atau Flutter (jika diperlukan)
+- **Mobile Framework**: Ionic dengan AngularJS
 - **Blockchain Development**: Truffle, Hardhat, atau Foundry
 - **Version Control**: Git dengan GitLab atau GitHub Enterprise
 
@@ -341,16 +341,7 @@ Catatan: Interface bengkel tidak dikembangkan dalam proyek ini
 - Implementasi CDN untuk konten statis
 - Sistem monitoring dan alerting performa
 
-#### 8.3.6 Risiko Kepatuhan Regulasi
-**Risiko**: Perubahan regulasi cryptocurrency yang mempengaruhi operasi platform
-**Mitigasi**:
-- Konsultasi legal untuk kepatuhan regulasi
-- Arsitektur fleksibel untuk adaptasi perubahan regulasi
-- Implementasi framework compliance KYC/AML
-- Audit dan update kepatuhan secara regular
-- Kapabilitas pembatasan geografis jika diperlukan
-
-#### 8.3.7 Risiko Key Personnel
+#### 8.3.6 Risiko Key Personnel
 **Risiko**: Kehilangan anggota tim pengembangan kritis selama proyek
 **Mitigasi**:
 - Dokumentasi komprehensif semua komponen sistem
@@ -359,7 +350,7 @@ Catatan: Interface bengkel tidak dikembangkan dalam proyek ini
 - Penugasan backup developer untuk modul kritis
 - Pendekatan pengembangan bertahap untuk meminimalkan dependensi single-person
 
-#### 8.3.8 Risiko Integrasi Third-Party
+#### 8.3.7 Risiko Integrasi Third-Party
 **Risiko**: Perubahan sistem Navidoc yang mempengaruhi fungsionalitas integrasi
 **Mitigasi**:
 - Kontrak API berversi dengan backward compatibility
@@ -368,7 +359,7 @@ Catatan: Interface bengkel tidak dikembangkan dalam proyek ini
 - Prosedur testing integrasi yang komprehensif
 - Service level agreement untuk reliability integrasi
 
-#### 8.3.9 Risiko Keamanan Dana
+#### 8.3.8 Risiko Keamanan Dana
 **Risiko**: Akses tidak sah ke dana platform atau aset investor
 **Mitigasi**:
 - Cold storage untuk mayoritas dana platform
@@ -377,7 +368,7 @@ Catatan: Interface bengkel tidak dikembangkan dalam proyek ini
 - Coverage asuransi untuk dana platform
 - Prosedur incident response untuk pelanggaran keamanan
 
-#### 8.3.10 Risiko Privasi Data
+#### 8.3.9 Risiko Privasi Data
 **Risiko**: Akses tidak sah ke data personal dan finansial pengguna
 **Mitigasi**:
 - Enkripsi end-to-end untuk data sensitif
@@ -393,12 +384,6 @@ Catatan: Interface bengkel tidak dikembangkan dalam proyek ini
 - Kecepatan pemrosesan transaksi
 - Efisiensi eksekusi smart contract
 - Reliability cross-chain bridge
-
-### 9.2 KPI Bisnis
-- Jumlah kampanye aktif
-- Total volume pendanaan yang diproses
-- Tingkat partisipasi investor
-- Volume perdagangan STO token
 
 ## 10. Kesimpulan
 
